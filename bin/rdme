@@ -1,0 +1,47 @@
+#!/bin/sh
+found=false;
+use_tar=false
+for k in tar tar.gz tgz tar.bz2 tbz tar.xz txz;do
+  i=$(basename $1 .$k)
+  if [ $i != $1 ];then
+    use_tar=true
+    break
+  fi
+done
+if $use_tar;then  # Always exits
+  for j in $i/README $i/README.$i ./$i/README.$i;do  # Most common first
+    if tar -tf $1 $j >/dev/null 2>&1;then
+      found=true
+      break
+    fi
+  done
+  if $found;then
+    tar -xOf $1 $j
+    exit
+  else
+    echo no $i/README.$i or $i/README or ./$i/README.$i in $1
+    echo
+    tar -tf $1
+    exit 1
+  fi
+fi
+i=$(basename $1 .zip)
+if [ $i != $1 ];then
+  for j in $i/README $i/README.$i ./$i/README.$i;do
+    if unzip -t $1 $j >/dev/null 2>&1;then
+      found=true
+      break
+    fi
+  done
+  if $found;then
+    unzip -p $1 $j
+  else
+    echo no $i/README or $i/README.$i or ./$i/README.$i in $1
+    echo
+    unzip -t $1
+    exit 1
+  fi
+  exit
+fi
+echo $1 not a recognised format
+exit 1

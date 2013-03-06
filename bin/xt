@@ -1,0 +1,34 @@
+#!/bin/sh
+j=$(basename $0)
+if [ $j = lxt ];then
+  size=88x54
+  font="-font 10x20"
+else
+  size=88x72
+  font="-font 7x14"
+fi
+if [ "$1" = -cd ];then
+  shift
+  if [ -z "$1" ];then
+    cd
+  else
+    if [ -d "$1" ];then
+      cd "$1"
+      shift
+    else
+      echo "Not a directory. $2" >&2
+      exit 1
+    fi
+  fi
+fi
+if [ -z "$1" ];then
+  i=$size
+else
+  if [ "$1" = "-" ];then
+    i=$size
+  else
+    i=$1
+  fi
+  shift
+fi
+SHLVL=0 xterm -rw -ls -sl 2000 -sb -geometry $i $font "$@" &

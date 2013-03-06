@@ -1,0 +1,35 @@
+Welcome to my command-line tools!
+
+The majority of these are scripts or symbolic links to scripts.
+3 are compiled programs: sources for findit and strerror are here,
+and the source for q is in a sibling repository.
+
+These commands are in the bin directory below. You can add them to your ~/bin or
+make bin your ~/bin if you don't already have one. ~/bin should then show up in
+your PATH; fix your ~/.bashrc if it doesn't. Alternatively, you could add the
+bin commands to some other directory already in your PATH such as
+/usr/local/bin.
+
+Some commands come straight from dot_bashrc (which is a copy of my .bashrc). In
+order of appearance, these are:-
+ :  : cd to a sibling directory. Tab completion not available :(
+ /  : cd to an immediate subdirectory (much as cd would do)
+ pd : is an extended pushd. pd <some dir> does a pushd to that dir,
+      but does not echo the new directory stack;
+      pd with no arg works similarly.
+      pd <some number> does pushd +<some number>,
+      Likely fails with directories named "1", "2" &c.
+ .. : cd to parent directory
+ s  : unwinds one level of shell invocation, i.e. it exits.
+      In other words, it reStarts the process that invoked this shell.
+      .bashrc does not define s when run in the bottom shell (SHLVL=1),
+      in this case bin/s is obeyed instead.
+rdy: alternative to "s" which just tells you what shell level you're at,
+     rather than terminating the shell if it's above 1.
+CD : defeats bash sourcepath option (you see where you really are)
+]  : disaplays directory stack 1 entry/line numbered
+]] : displays subset of directory stack with entries containing $1
+XRB: Gives a panning 640x480 display (for running old games).
+     You will likely need to customise it to match your screen resolution
+     (mine is 2560x1440) and video output if other than DVI-0.
+XRS: Reverts to full screen from XRB

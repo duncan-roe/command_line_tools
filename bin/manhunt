@@ -1,0 +1,15 @@
+#!/bin/sh
+if [ "$1" = "" ];then
+  echo "Usage: $(basename $0) <search token>"
+  exit 1
+fi
+#k=echo
+k=""
+m="$1"
+shift
+for i in $(echo $MANPATH|sed 's/:/ /g');do
+  echo Now trying $i...
+  cd $i || continue
+  find . -type f -name '*.gz' -print|xargs -n 32 -r -e $k zgrep "$@" -- $m /dev/null
+  find . -type f \( -not -name '*.gz' \) -print|xargs -n 32 -r -e $k grep "$@" -- $m /dev/null
+done

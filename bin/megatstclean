@@ -1,0 +1,16 @@
+#!/bin/sh
+case "$1" in
+"")
+  i=.
+  ;;
+-)
+  cd $2/..
+  tstclean
+  exit
+  ;;
+*)
+  i=$1
+  ;;
+esac
+find $i -follow -name RCS -type d -print -exec megatstclean - {} \;
+#find $i -name RCS -type d -print -exec megatstclean - {} \;

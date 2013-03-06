@@ -1,0 +1,127 @@
+#!/bin/sh
+#set -x
+
+# Runs the show
+main()
+{
+  try_gnu_args
+  set_personality || exit 1
+
+# Had to inline the next bit, coz it uses shift & args are local to functions
+if [ -z "$1" ];then
+  echo "Usage: $j <string> [<grep option>,...]" >&2
+  exit 1
+else
+  k="$1"
+  shift
+fi
+
+do_the_grep "$@"
+}
+
+# If we have GNU grep, set GNU args for grep & find.
+# (I've assumed sed's -u arg is standard,
+#  if that's wrong then fix it here and please let me know)
+# I expect ufl & fl will fail with non-GNU utils, but sfl should still work.
+try_gnu_args()
+{
+  grep --version >/dev/null 2>&1 &&
+    { n=-noleaf; lb=--line-buffered; } || { n=; lb=; }
+}
+
+# Check for good invocation.
+# sfl is designed to be symlinked to one of the following.
+# which symlink is used determines behaviour.
+# list of symlinks:
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 afl -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 aflc -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 afll -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 afllc -> sfl
+# lrwxrwxrwx  1 root root     3 Mar  4 10:38 fl -> sfl
+# lrwxrwxrwx  1 root root     3 Mar  4 10:38 flc -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 sflc -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 sfll -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 sfllc -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 ufl -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 uflc -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 ufll -> sfl
+# lrwxrwxrwx  1 root root     3 2004-09-30 22:12 ufllc -> sfl
+set_personality()
+{
+  j=$(basename $0)
+  case $j in
+  u*)
+    f='.. -maxdepth 2 -mindepth 2'
+    w=w
+    ;;
+  s*)
+    f=.
+    w=w
+    ;;
+  a*)
+    f=.
+    w=""
+    ;;
+  f*)
+    f='. -maxdepth 1'
+    w=w
+    ;;
+  *)
+    echo bad symlink of sfl to $j
+    return 1
+    ;;
+  esac
+  case $j in
+  ?fl | fl)
+    i=''
+    ;;
+  ?fll)
+    i=''
+    f="$f -follow"
+    ;;
+  ?flc | flc)
+    i=i
+    ;;
+  ?fllc)
+    i=i
+    f="$f -follow"
+    ;;
+  *)
+    echo bad symlink of sfl to $j
+    return 1
+    ;;
+  esac
+  return 0
+}
+
+# Actually do the grep
+do_the_grep()
+{
+  { find $f $n -depth -type f \( \
+      -name "*.c" \
+      -o -name "*.cpp" \
+      -o -name "*.cxx" \
+      -o -name "*.cc" \
+      -o -name "*.f" \
+      -o -name "*.for" \
+      -o -name "*.S" \
+      -o -name "*.h" \
+      -o -name "*.java" \
+      -o -name "*.exp" \
+      -o -name "*.tcl" \
+      -o -name "*.expect" \
+      -o -name "*.pl" \
+      -o -name "*.py" \
+      -o -iname "makefile" \
+      -o -name "Kconfig" \
+      -o -name "make-file" \
+      -o -name "*.i" \
+      -o -name "*.l" \
+      -o -name "*.lex" \
+      -o -name "*.y" \
+      -o -name "*.yacc" \
+      -o -name "*.sh" \
+      \) -print0 | xargs -0 -n 32 -r grep $lb -${i}s${w}n "$@" -- \
+        "$k" /dev/null; } | sed -u 's?^[.]/??'
+}
+main "$@"

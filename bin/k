@@ -1,0 +1,17 @@
+#!/bin/sh
+chkargs()
+{
+  while [ $# -gt 0 ]
+  do
+    j="$1"
+    shift
+    case "$j" in
+      --) return 0;;
+      -*) continue;;
+       *) return 0;;
+    esac
+  done
+  return 1
+}
+if chkargs "$@";then i=-N;fi
+exec less $i "$@"

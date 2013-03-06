@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ -n "$SHLVL" ];then
+  if [ $(uname) = Linux ];then
+    i=$(expr $SHLVL - 1)
+  else
+    i=$SHLVL
+  fi
+  echo "At shell level $i"
+else
+  echo '$SHLVL not set'
+fi

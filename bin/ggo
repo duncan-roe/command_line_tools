@@ -1,0 +1,45 @@
+#!/bin/bash -p
+# Hide shell commands from expect \
+[ -n "$1" ] || { echo "first arg must be program name" >&2;exit 1; } ;\
+[ -x "$1" ] || { echo "$1 is not a program" >&2;exit 1; } ;\
+export PROGNAME=$1;shift;\
+exec expect "$0" "$@"
+
+# Set up
+# === ==
+
+# Get the program args, if any
+if {$argc >= 2 && [string equal -nocase -length 2 [lindex $argv 0] -a]} \
+  {set args [lindex $argv 1];set nextarg 2} \
+  {set args {};set nextarg 0}
+
+# start gdb, and put in some nice settings
+spawn gdb -n
+expect {(gdb) }
+exp_send "file $env(PROGNAME)\r"
+expect {(gdb) }
+exp_send "set print null-stop\r"
+expect {(gdb) }
+exp_send "set print sevenbit-strings\r"
+expect {(gdb) }
+exp_send "set print elements 0\r"
+expect {(gdb) }
+exp_send "set height 0\r"
+expect {(gdb) }
+exp_send "set print pretty\r"
+expect {(gdb) }
+exp_send "set confirm off\r"
+expect {(gdb) }
+exp_send "set unwindonsignal on\r"
+expect {(gdb) }
+exp_send "b main\r"
+expect {(gdb) }
+exp_send "run $args\r"
+expect {(gdb) }
+for {set i $nextarg} {$i < $argc} {incr i} \
+{
+  exp_send [lindex $argv $i]\r
+  if {$i<$argc-1} \
+    {expect -re "\[(\]gdb\[)\] |\r\n>"}
+}                                  ;# for {set i 0} {$i < $argc} {incr i}
+interact

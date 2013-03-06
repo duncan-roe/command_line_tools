@@ -1,0 +1,15 @@
+#!/bin/sh
+# \
+exec wish "$0"
+# From figure 16.2
+scale .r -label Red -from 0 -to 255 -length 10c -orient hor -command nC
+scale .g -label Green -from 0 -to 255 -length 10c -orient hor -command nC
+scale .b -label Blue -from 0 -to 255 -length 10c -orient hor -command nC
+frame .s -height 15m -width 6c
+pack .r .g .b -side top
+pack .s -side bottom -pady 2m
+proc nC v \
+{
+  set c [format #%02x%02x%02x [.r get] [.g get] [.b get]]
+  .s configure -bg $c
+};# proc nC v

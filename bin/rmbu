@@ -1,0 +1,9 @@
+#!/bin/sh
+j=$(basename $0)
+if [ -z "$1" ];then
+  echo "$j: Missing filename arg"
+  exit 1
+fi
+j=$(echo $j|cut -c 3-)
+[ "$j" = "~" ] || j=.$j
+rm -i $1$j

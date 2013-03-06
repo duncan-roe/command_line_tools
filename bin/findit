@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Please compile and install findit from sibling source directory" >&2
+exit 1

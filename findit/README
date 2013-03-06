@@ -1,0 +1,26 @@
+findit is a utility to verify whether a shared object can satisfy a particular
+reference
+
+You use it by:
+  findit [libraries] [shared object] [entry name]
+ where
+  <libraries> is as you would specify to gcc, e.g. "-lm" for the math library;
+   absolute path names also work as long as they contain ".so".
+  <shared object> is the path name of the target, or the bare file name if the
+   file is in one of the standard places or somewhere in LD_LIBRARY_PATH.
+  <entry name> is as per program source, e.g. "printf".
+
+Examples of Use (program output preceded by ">"):
+
+findit /lib/libc.so.6 printf
+> Found printf in /lib/libc.so.6 at 0xb77729a0
+findit libldap.so ldap_simple_bind_s
+> Found ldap_simple_bind_s in libldap.so at 0xb76de080
+
+Some shared libraries require other shared libraries to be loaded first. That is
+what the <libraries> parameter(s) are for. If you need <libraries> but don't
+give them, you will usually get appropriate error messages.
+
+TO BUILD: type "make".
+ If you run 32 and 64 bit simulatneously, you need to build a version of findit
+for each.

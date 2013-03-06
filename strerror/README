@@ -1,0 +1,19 @@
+strerror converts its (numeric) argument to the corresponding error message (as
+perror(3) would print).
+
+When invoked as strsignal, it prints a description of the corresponding signal
+(as distinct from the signal name).
+
+When invoked as kill0, it reports whether its argument is running (its argument
+is a PID in this case).
+
+Examples of Use (program output preceded by ">"):
+
+strsignal 1
+> strsignal returned Hangup
+kill0 1
+> kill0 returned with errno=1
+strerror 1
+> strerror returned Operation not permitted
+
+TO BUILD: type "make".

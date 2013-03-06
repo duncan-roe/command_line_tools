@@ -1,0 +1,11 @@
+#!/bin/sh
+# $Id: chkhee,v 1.5 2003/09/01 03:00:56 dunc Exp $
+if [ -z "$1" ];then f=hee;else f=$1;fi
+grep -in warn $f /dev/null
+grep -in error $f /dev/null
+grep -iwn no $f /dev/null
+grep -iwn exit $f /dev/null
+grep -iwn fault $f /dev/null
+grep -iwn bad $f /dev/null
+grep -in fail $f /dev/null
+grep -wn not $f /dev/null|egrep 'found|exist'

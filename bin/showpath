@@ -1,0 +1,14 @@
+#!/bin/sh
+#set -x
+if [ -z "$1" ];then
+  i=$PATH
+else
+  case $1 in
+m*|M*)i=$MANPATH;;
+l*|L*)i=$LD_LIBRARY_PATH;;
+c*|C*)i=$CPLUS_INCLUDE_PATH;;
+p*|P*)i=$PKG_CONFIG_PATH;;
+*)i=$PATH;;
+  esac
+fi
+for j in $(echo $i|sed 'y/:/ /');do echo $j;done

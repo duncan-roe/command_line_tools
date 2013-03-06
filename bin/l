@@ -1,0 +1,26 @@
+#!/bin/sh
+#set -x
+j=$(basename $0)
+case $j in
+l)
+  n="-name"
+  f="-noleaf"
+  ;;
+lc)
+  n="-iname"
+  f="-noleaf"
+  ;;
+ll)
+  f="-follow"
+  n="-name"
+  ;;
+llc)
+  f="-follow"
+  n="-iname"
+  ;;
+*)
+  echo bad symlink of l to $j
+  exit 1
+  ;;
+esac
+find . -depth $f \( $n "*"$1"*" -o $n ".*"$1"*" \) -print

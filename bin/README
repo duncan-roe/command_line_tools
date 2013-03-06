@@ -1,0 +1,169 @@
+Welcome to my command-line tools!
+
+Most of them are in this directory. There are 3 kinds of commands here: symbolic
+links, shell scripts and compiled programs. Symbolic links are differentiated in
+the list below by an "@" sign; scripts that need "expect" installed show with
+"+"; everything else gets a ":".
+
+You can get expect by following the links from http://expect.nis.gov/
+
+To get a list of unique commands, you can "grep -v @ README".
+
+Alphabetic list of commands:-
+ afl    @ Like sfl but matches anywhere rather than only as a token.
+ aflc   @ Like sflc but matches anywhere rather than only as a token.
+ afll   @ Like sfll but matches anywhere rather than only as a token.
+ afllc  @ Like sfllc but matches anywhere rather than only as a token.
+ bak    @ Like bu but for .bak files.
+ bu     : Renames <file> to <file>.bu.
+ chkhee : Tries to report only errors in the output from "make". By default
+          expects the output from make to be in a file called "hee" after
+          make 2>&1 | tee hee
+          but it accepts a filename argument to replace hee.
+ cmbak  @ Like cmbu but for .bak files.
+ cmbu   : Compares <file>.bu with <file> (oldest file first).
+          Accepts diff options but you have to put them at the end of the line.
+ cmnew  : Like cmbu except it compares <file> with <file>.new (oldest first).
+ cmold  @ Like cmbu but for .old files
+ cmorig @ Like cmbu but for .orig files
+ cmoriginal@ Like cmbu but for .original files
+ cmreal @ Like cmbu but for .real files
+ cmsave @ Like cmbu but for .save files
+ cm~    @ Like cmbu but for ~ files
+ colours: Tk script to choose a colour you can specify numerically.
+          (Actually an example from the book).
+ confdiff: Compares Linux .config files by discarding comments & blanks then
+           sorting both files before diffing them. This command compares some
+           RCS revision (default latest) with the current file, so if you use
+           another revision control system or want to compare 2 arbitrary files,
+           then you will need to adjust it a bit.
+ darkstar.sh+ I left this in more as an example than a useful command per se.
+              Given that you are working on a system called dimstar and you want
+              your display to show the output from an xterm running on a system
+              called darkstar, this script will set up authorisation for your
+              user on darkstar and start an xterm there.
+ dimstar.sh+ Is analogous to darkstar.sh but now you are logged in to some
+             system (say the router / firewall) without an X display and you
+             want to work in an xterm displaying on your home system dimstar.sh.
+             The script uses rsh but I expect you could change it to use ssh.
+             Once you have one xterm, you can start more of them from it:
+             root xterms also, as long as ~root symlinks ~/.Xauthority.
+ findit : verifies whether a shared object can satisfy a particular reference.
+          Build and install from ../findit/
+ fl     @ Like sfl but search CWD only.
+ flc    @ Like fl but case-independent.
+ ggo    + drives gdb with arbitrary gdb commands on the command line.
+          See README_ggo.
+ k      : Pager. Extension of "less" to turn on line numbers unless input is a
+          pipe (as determined by there being no non-option args).
+          .bashrc exports LESS to leave the output from k on the screen.
+          LESS also changes the ":" prompt to "More".
+ kill0  @ Quick check of whether supplied PID is running:
+          it is running unless kill0 returns "No such process".
+ l      : given a fragment of a file name, find all files in the CWD and below
+          with names containing that fragment, including dot files.
+ lc     @ Like l but case independent.
+ ll     @ Like l but follow directory symbolic links.
+ llc    @ Like l but case independent and follow directory symbolic links.
+ lxt    @ Like xt but with a large font (and less lines).
+ manhunt: Searches all man pages in MANPATH for the string given as 1st
+          argument. Options to grep may follow.
+          Searches uncompressed and .gz files.
+ megatstclean: Runs tstclean in all subdirectories with an RCS subdirectory.
+ new    @ Like bu but for .new files.
+ old    @ Like bu but for .old files.
+ orig   @ Like bu but for .orig files.
+ q      : The Q editor. Build and install from sibling q repository.
+ rdme   : Attempts to display the top-level README in a tarball or zip file.
+          Recognised suffices are tar, tar.gz, tgz, tar.bz2, tbz, tar.xz & txz
+          (from line 4 of rdme). If you know any others, please tell me.
+          rdme needs a recent GNU tar that decompresses automatically.
+ real   @ Like bu but for .real files.
+ rmbak  @ Like rmbu but for .bak files.
+ rmbu   : Remove <file>.bu.
+          (.bashrc stops .bu files from being offered by tab completion)
+ rmnew  @ Like rmbu but for .new files.
+ rmold  @ Like rmbu but for .old files.
+ rmorig @ Like rmbu but for .orig files.
+ rmoriginal@ Like rmbu but for .original files.
+ rmreal @ Like rmbu but for .real files.
+ rmsave @ Like rmbu but for .save files.
+ rm~    @ Like rmbu but for ~ files.
+          (.bashrc stops ~ files from being offered by tab completion)
+ runindent.sh: Runs GNU indent over its arguments (.c & .h files) according to
+               my quirky preferences. So treat it as a starting point.
+               The -T lines declare enough special types for the Q editor but
+               doubtless you'll want to add your own.
+ s      : Echoes the shell level. See ../README: the command here (in bin) is
+          only obeyed when .bashrc hasn't aliased "s" to exit.
+ save   @ Like bu but for .save files.
+ sfl    : Search files in the CWD and directory tree below for a token (variable
+          name, word etc.). Avoids wasting time searching binary files by only
+          searching specified files (e.g.with extensions .c & .h) - you can add
+          & remove files & extensions to suit your needs.
+          sfl tries hard not to buffer output so for instance if you want to
+          find all occurrences of the symbol SB600 in the Linux source then from
+          the top-level directory you can enter:
+             sfl SB600 2>&1|k
+          and you will see matching lines as they are found, despite the "|k".
+ sflc   @ Like sfl but case-independent.
+ sfll   @ Like sfl but follow symbolic links to directories.
+ sfllc  @ Like sfll but case-independent.
+ showpath: List items in PATH, 1 per line. If given an argument instead lists
+           MANPATH, LD_LIBRARY_PATH, CPLUS_INCLUDE_PATH or PKG_CONFIG_PATH;
+           the argument is the first letter of the path name (case insensitive).
+           You can extend this script for other paths in the obvious fashion.
+ strerror: Interprets its numeric arg as error text (c.f. perror(3)).
+           Build and install from ../strerror/
+ strsignal@ Like strerror but interpret numeric arg as signal description.
+ trecpy : Back-to-back-tar copy. Because it's tar it will copy tree names,
+          so you need to cd to the parent of the source first.
+          trecpy preserves all attributes and source access time (so it can
+          make sense to trecpy a file rather than a dir).
+          Symbolic links copy correctly (because of -U tar option).
+          Accepts "-v" but no other tar options.
+          Arg1: source object; Arg2 dir to contain copied object.
+ tstclean: Confirms that all files in the CWD that are known to RCS are up to
+           date.
+ ufl    @ Like fl but search siblings as well as the CWD.
+ uflc   @ Like ufl but case independent.
+ ufll   @ Like ufl but follow sibling symbolic links.
+ ufllc  @ Like ufll but case independent.
+ unbak  @ Like unbu but for .bak files.
+ unbu   : Renames <file>.bu back to <file>.
+ unnew  @ Like unbu but for .new files.
+ unold  @ Like unbu but for .old files.
+ unorig @ Like unbu but for .orig files.
+ unoriginal@ Like unbu but for .original files.
+ unreal @ Like unbu but for .real files. (My favourite command name :)
+ unsave @ Like unbu but for .save files.
+ un~    @ Like unbu but for ~ files.
+ v      : ls with pagination. Output is monochrome but files are classified
+          (e.g. trailing "*" for executable). Entries are sorted by lines
+          instead of by columns as is appropriate for pagination.
+ vc     : Like v but ls output is in colour.
+ xt     : Starts a new xterm with a login shell at SHLVL=1 (so "s" will work).
+          xt sets the following nonstandard defaults:-
+            -font: varies according to whether invoked as xt or lxt.
+            -geometry: size varies according to whether invoked as xt or lxt.
+                       command line can override - see below.
+            -rw: Reverse wraparound is enabled.
+            -ls: (login shell).
+            -sb: Display a scrollbar.
+            -sl: Scrollbar saves 2000 lines.
+          Command Syntax:
+            xt [-cd <dir>] [geometry | "-" [other xterm args...]]
+          In other words, if you want to specify extra xterm args then you must
+          provide a geometry or a single minus sign.
+          Examples:
+            xt -cd ~ - -bg palegreen1
+            xt 80x24-0-0 -bg yellow
+            xt - -bg orange
+            xt -
+            xt
+
+Notes:-
+ runindent.sh: The Q macro ^N^W^G runs runindent.sh on the current file and
+               pulls back stand-alone "/*" comments to line 1. If mode "fm +l"
+               is asserted, the file will be saved with leading tabs
+               (but no tabs elsewhere).
