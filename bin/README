@@ -54,6 +54,9 @@ Alphabetic list of commands:-
  flc    @ Like fl but case-independent.
  ggo    + drives gdb with arbitrary gdb commands on the command line.
           See README_ggo.
+ glb    : Automatically adds "-E --line-buffered" to "grep".
+          (glb == Grep Line Buffered). By using glb instead of grep in pipes,
+          you see lines as soon as they are matched.
  k      : Pager. Extension of "less" to turn on line numbers unless input is a
           pipe (as determined by there being no non-option args).
           .bashrc exports LESS to leave the output from k on the screen.
