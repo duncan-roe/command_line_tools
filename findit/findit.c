@@ -31,7 +31,7 @@
 int
 main(int argc, char **argv)
 {
-  char *lib;
+  char *lib, *libarg;
   const char *error;
   void *handle;
   void *result;
@@ -48,22 +48,30 @@ main(int argc, char **argv)
   obj = argv[argc - 2];            /* File to search for symbol */
   for (i = 1; i < argc - 2; i++)
   {
-    lib = argv[i];
-    if (lib[0] != '-' || lib[1] != 'l')
+    libarg = argv[i];
+    if (libarg[0] != '-' || libarg[1] != 'l')
     {
-      fprintf(stderr, "Bad library arg: \"%s\"", lib);
+      fprintf(stderr, "Bad library arg: \"%s\"", libarg);
       goto usage;
-    }                              /* if(lib[0]!='-'||lib[1]!='l') */
-    if (!(lib = malloc(strlen(argv[i]) + 5))) /* -l -> lib.so\000 */
+    }                              /* if(libarg[0]!='-'||libarg[1]!='l') */
+    
+    // Allow spaces between -l and lib name
+    // But not on 3rd-last argument
+    if (i < argc - 3 && strlen(libarg) ==2)
+      libarg = argv[++i];
+    else
+      libarg += 2;
+    
+    if (!(lib = malloc(strlen(libarg) + 7))) /* libxxx.so\000 */
     {
       fputs("Out of memory!\n", stderr);
       exit(1);
     }                              /* if(!(lib=malloc(strlen(argv[i]+2)) */
-    if (!strstr(argv[i], ".so"))
+    if (!strstr(libarg, ".so"))
       strcpy(lib, "lib");
     else
       lib[0] = 0;
-    strcat(lib, argv[i] + 2);
+    strcat(lib, libarg);
     if (!strstr(lib, ".so"))
       strcat(lib, ".so");
     handle = dlopen(lib, RTLD_LAZY | RTLD_GLOBAL);
