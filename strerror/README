@@ -12,8 +12,6 @@ Examples of Use (program output preceded by ">"):
 strsignal 1
 > strsignal returned Hangup
 kill0 1
-> kill0 returned with errno=1
-strerror 1
-> strerror returned Operation not permitted
+> kill0 returned Operation not permitted
 
 TO BUILD: type "make".
