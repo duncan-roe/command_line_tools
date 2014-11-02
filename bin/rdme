@@ -1,4 +1,16 @@
 #!/bin/sh
+
+nofile () \
+{
+    echo -n "no "
+    n=false
+    for j in $m;do
+      if $n;then echo -n " or ";else n=true;fi
+      echo -n $j
+    done
+    echo " in $1"
+    echo
+}
 found=false;
 use_tar=false
 for k in tar tar.gz tgz tar.bz2 tbz tar.xz txz;do
@@ -8,8 +20,15 @@ for k in tar tar.gz tgz tar.bz2 tbz tar.xz txz;do
     break
   fi
 done
+$use_tar ||
+{
+  i=$(basename $1 .zip)
+  if [ $i != $1 ];then use_zip=true;else use_zip=false;fi
+}
+# Most common first
+m="./$i/README $i/README $i/README.$i ./$i/README.$i $i/README.txt $i/README.TXT"
 if $use_tar;then  # Always exits
-  for j in $i/README $i/README.$i ./$i/README.$i;do  # Most common first
+  for j in $m;do
     if tar -tf $1 $j >/dev/null 2>&1;then
       found=true
       break
@@ -19,15 +38,13 @@ if $use_tar;then  # Always exits
     tar -xOf $1 $j
     exit
   else
-    echo no $i/README.$i or $i/README or ./$i/README.$i in $1
-    echo
+    nofile $1
     tar -tf $1
     exit 1
   fi
 fi
-i=$(basename $1 .zip)
-if [ $i != $1 ];then
-  for j in $i/README $i/README.$i ./$i/README.$i;do
+if $use_zip;then
+  for j in $m;do
     if unzip -t $1 $j >/dev/null 2>&1;then
       found=true
       break
@@ -36,9 +53,8 @@ if [ $i != $1 ];then
   if $found;then
     unzip -p $1 $j
   else
-    echo no $i/README or $i/README.$i or ./$i/README.$i in $1
-    echo
-    unzip -t $1
+    nofile $1
+    unzip -l $1
     exit 1
   fi
   exit

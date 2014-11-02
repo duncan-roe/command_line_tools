@@ -17,10 +17,10 @@ FIGNORE=".o:.bu:~"
     PS1='\t\$ '
   }
 }
-: () { cd ../$1; }
-/ () { cd ./$1; }
-pd() { [ -n "$1" ] && { pushd +$1 >/dev/null 2>&1 ||
-  pushd $1 >/dev/null;return; }
+: () { cd "../$1"; }
+/ () { cd "./$1"; }
+pd() { [ -n "$1" ] && { pushd "+$1" >/dev/null 2>&1 ||
+  pushd "$1" >/dev/null;return; }
   pushd >/dev/null; }
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info:/sdb3/teTeX/info

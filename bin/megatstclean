@@ -13,4 +13,3 @@ case "$1" in
   ;;
 esac
 find $i -follow -name RCS -type d -print -exec megatstclean - {} \;
-#find $i -name RCS -type d -print -exec megatstclean - {} \;

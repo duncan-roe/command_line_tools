@@ -114,7 +114,6 @@ do_the_grep()
       -o -name "*.py" \
       -o -iname "makefile" \
       -o -name "Kconfig" \
-      -o -name "make-file" \
       -o -name "*.i" \
       -o -name "*.l" \
       -o -name "*.lex" \
