@@ -34,12 +34,18 @@ exp_send "set unwindonsignal on\r"
 expect {(gdb) }
 exp_send "b main\r"
 expect {(gdb) }
+set timeout 50
 exp_send "run $args\r"
 expect {(gdb) }
+set timeout 10
 for {set i $nextarg} {$i < $argc} {incr i} \
 {
   exp_send [lindex $argv $i]\r
   if {$i<$argc-1} \
     {expect -re "\[(\]gdb\[)\] |\r\n>"}
 }                                  ;# for {set i 0} {$i < $argc} {incr i}
-interact
+interact -echo \\\\ \
+{
+  puts {}
+  exit
+}

@@ -97,7 +97,7 @@ set_personality()
 # Actually do the grep
 do_the_grep()
 {
-  { find $f $n -depth -type f \( \
+  { find $f $n -depth \( -type f -o -type l \) \( \
       -name "*.c" \
       -o -name "*.cpp" \
       -o -name "*.cxx" \
