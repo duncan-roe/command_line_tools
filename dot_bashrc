@@ -1,11 +1,14 @@
-# $Id: dot_bashrc,v 1.5 2013/03/02 07:01:14 dunc Exp $
-for i in /usr/local/bin /home/dunc/bin;do
-  echo $PATH|grep $i >/dev/null || PATH=$i:$PATH
+for i in \
+  /usr/local/bin \
+  /home/dunc/command_line_tools/bin \
+  /home/dunc/bin
+do
+  echo $PATH|grep $i >/dev/null || { [ -d $i ] && PATH=$i:$PATH; }
 done
 echo $PATH|grep -w sbin>/dev/null || PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
-HISTCONTROL=ignoredups
+HISTIGNORE='&:]:pd *:v:pd'
 FIGNORE=".o:.bu:~"
-[ $UID -ne 0 ] && FIGNORE+=":.d"
+[ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
 {
   PS1='\h@\t\w\$ '
@@ -31,7 +34,8 @@ export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
 export VISUAL=q
-export PAGER=less
+export PAGER=k
+export GIT_PAGER="k -R"
 export CC=gcc
 export FC=g77
 export C=' *.c *.h Makefile'
@@ -39,18 +43,24 @@ export SHELL=`type -p bash`
 export \
   LESS='-X -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More.'
 export Q_HELP_DIR=/usr/q
-export Q_HELP_CMD=less
+export Q_HELP_CMD=k
 unalias -a
 alias ..='cd ..'
+[ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
 alias CD='cd `/bin/pwd`'
 alias ]='dirs -v'
-alias ]]="]|grep -E "
+alias ]]="]|glb "
 alias \
   XRB='xrandr --fb 2560x1440 --output DVI-0 --mode 640x480 --panning 2560x1440'
 alias XRS='xrandr --fb 2560x1440 --output DVI-0 --mode 2560x1440 --panning 0x0'
 [ -t 0 ] && stty erase ^? kill ^u
 ulimit -c 30000
+unset i
 shopt -u sourcepath
 shopt -s checkwinsize
+shopt -s no_empty_cmd_completion
+shopt -s histreedit
+shopt -s histverify
+shopt -s histappend
