@@ -5,6 +5,7 @@ while [ $# -ne 0 ];do
     -TFILE \
     -Tbool \
     -Tchainbase \
+    -Tmacro5 \
     -Tscrbuf5 \
     -Tsiginfo_t \
     -Tsize_t \

@@ -1,12 +1,11 @@
-for i in \
-  /usr/local/bin \
-  /home/dunc/command_line_tools/bin \
-  /home/dunc/bin
+j="/usr/local/bin /home/dunc/command_line_tools/bin /home/dunc/bin"
+[ $(uname -m) = x86_64 ] && j="$j /home/dunc/bin64"
+for i in $j
 do
   echo $PATH|grep $i >/dev/null || { [ -d $i ] && PATH=$i:$PATH; }
 done
 echo $PATH|grep -w sbin>/dev/null || PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
-HISTIGNORE='&:]:pd *:v:pd'
+HISTIGNORE='&:]:pd *:v:pd:popd*'
 FIGNORE=".o:.bu:~"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -22,9 +21,10 @@ FIGNORE=".o:.bu:~"
 }
 : () { cd "../$1"; }
 / () { cd "./$1"; }
-pd() { [ -n "$1" ] && { pushd "+$1" >/dev/null 2>&1 ||
+pd() { [ -n "$1" ] && { [ "${1:0:1}" != "-" ] && pushd +"$1" >/dev/null 2>&1 ||
   pushd "$1" >/dev/null;return; }
   pushd >/dev/null; }
+pdd(){ [ -n "$1" ]||{ echo "pdd: missing arg" >&2;return 1; }; pd $1;pd;pd 1; }
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info:/sdb3/teTeX/info
 export ARCH=$(arch)
@@ -40,8 +40,8 @@ export CC=gcc
 export FC=g77
 export C=' *.c *.h Makefile'
 export SHELL=`type -p bash`
-export \
-  LESS='-X -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More.'
+export LESS="-X -j 1 \
+  -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
 export Q_HELP_DIR=/usr/q
 export Q_HELP_CMD=k
 unalias -a
