@@ -28,6 +28,13 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef __CYGWIN__
+#define CYGXTR 1
+#define DOTSO ".dll"
+#else
+#define CYGXTR 0
+#define DOTSO ".so"
+#endif
 int
 main(int argc, char **argv)
 {
@@ -62,18 +69,18 @@ main(int argc, char **argv)
     else
       libarg += 2;
     
-    if (!(lib = malloc(strlen(libarg) + 7))) /* libxxx.so\000 */
+    if (!(lib = malloc(strlen(libarg) + 7 + CYGXTR))) /* libxxx.(so|dll)\000 */
     {
       fputs("Out of memory!\n", stderr);
       exit(1);
     }                              /* if(!(lib=malloc(strlen(argv[i]+2)) */
-    if (!strstr(libarg, ".so"))
+    if (!strstr(libarg, DOTSO))
       strcpy(lib, "lib");
     else
       lib[0] = 0;
     strcat(lib, libarg);
-    if (!strstr(lib, ".so"))
-      strcat(lib, ".so");
+    if (!strstr(lib, DOTSO))
+      strcat(lib, DOTSO);
     handle = dlopen(lib, RTLD_LAZY | RTLD_GLOBAL);
     if (!handle)
     {
