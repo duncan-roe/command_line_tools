@@ -102,7 +102,6 @@ Alphabetic list of commands:-
                my quirky preferences. So treat it as a starting point.
                The -T lines declare enough special types for the Q editor but
                doubtless you'll want to add your own.
- S      : Sort file in-situ.
  s      : Echoes the shell level. See ../README: the command here (in bin) is
           only obeyed when .bashrc hasn't aliased "s" to "exit".
  save   @ Like bu but for .save files.
@@ -122,6 +121,7 @@ Alphabetic list of commands:-
            MANPATH, LD_LIBRARY_PATH, CPLUS_INCLUDE_PATH or PKG_CONFIG_PATH;
            the argument is the first letter of the path name (case insensitive).
            You can extend this script for other paths in the obvious fashion.
+ srt     : Sort file in-situ.
  strerror: Interprets its numeric arg as error text (c.f. perror(3)).
            Build and install from ../strerror/
  strsignal@ Like strerror but interpret numeric arg as signal description.
