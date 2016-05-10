@@ -19,20 +19,23 @@ order of appearance, these are:-
       pd with no arg works similarly.
       pd <some number> does pushd +<some number>,
       Likely fails with directories named "1", "2" &c.
-pdd: (pd down) is like pd but the new directory is inserted below the current
-     entry in the stack rather than above. If (like me) you like to keep the
-     directory stack in order then you can use pdd to a subdirto do that.
+ pdd: (pd down) is like pd but the new directory is inserted below the current
+      entry in the stack rather than above. If (like me) you like to keep the
+      directory stack in order then you can use pdd to a subdirto do that.
+ GS / GD / GL : git {status,display,log} in monochrome w/out pager
  .. : cd to parent directory
  s  : unwinds one level of shell invocation, i.e. it exits.
       In other words, it reStarts the process that invoked this shell.
       .bashrc does not define s when run in the bottom shell (SHLVL=1),
       in this case bin/s is obeyed instead.
-rdy: alternative to "s" which just tells you what shell level you're at,
-     rather than terminating the shell if it's above 1.
-CD : defeats bash sourcepath option (you see where you really are)
-]  : disaplays directory stack 1 entry/line numbered
-]] : displays subset of directory stack with entries containing $1
-XRB: Gives a panning 640x480 display (for running old games).
-     You will likely need to customise it to match your screen resolution
-     (mine is 2560x1440) and video output if other than DVI-0.
-XRS: Reverts to full screen from XRB
+ rdy: alternative to "s" which just tells you what shell level you're at,
+      rather than terminating the shell if it's above 1.
+ CD : defeats bash sourcepath option (you see where you really are)
+ ]  : disaplays directory stack 1 entry/line numbered
+ ]] : displays subset of directory stack with entries containing $1
+ XRB: Gives a panning 640x480 display (for running old games).
+      You will likely need to customise it to match your screen resolution
+      (mine is 2560x1440) and video output if other than DVI-0.
+ XRS: Reverts to full screen from XRB
+ pc1: ping -c1
+  c : 1-letter alias for cat

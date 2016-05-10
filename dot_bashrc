@@ -13,20 +13,19 @@ FIGNORE=".o:.bu:~"
   PS1='\h@\t\w\$ '
   IGNOREEOF=5
   [ "$TERM" = xterm ] &&
-  {
-    PROMPT_COMMAND='echo -ne \
-      "\033]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/~}\007"'
-    PS1='\t\$ '
-  }
+    PS1='\[\e]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/~}\a\]\t\$ '
 }
 : () { cd "../$1"; }
 / () { cd "./$1"; }
 pd() { [ -n "$1" ] && { [ "${1:0:1}" != "-" ] && pushd +"$1" >/dev/null 2>&1 ||
   pushd "$1" >/dev/null;return; }
   pushd >/dev/null; }
-pdd(){ [ -n "$1" ]||{ echo "pdd: missing arg" >&2;return 1; }; pd $1;pd;pd 1; }
+pdd(){ [ -n "$1" ]||{ echo "pdd: missing arg" >&2;return 1; }; pd "$1";pd;pd 1; }
+GS(){ git status "$@"|cat; }
+GD(){ git diff "$@"|cat; }
+GL(){ git log "$@"|cat; }
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
-export INFOPATH=/usr/info:/sdb3/teTeX/info
+export INFOPATH=/usr/info
 export ARCH=$(arch)
 [ "$ARCH" != i686 ] || unset ARCH
 [ "$ARCH" = x86_64 ] && export PKG_CONFIG_PATH=/usr/lib64/pkgconfig
@@ -42,7 +41,7 @@ export C=' *.c *.h Makefile'
 export SHELL=`type -p bash`
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
-export Q_HELP_DIR=/usr/q
+export Q_HELP_DIR=/usr/local/lib/q
 export Q_HELP_CMD=k
 unalias -a
 alias ..='cd ..'
@@ -55,6 +54,8 @@ alias ]]="]|glb "
 alias \
   XRB='xrandr --fb 2560x1440 --output DVI-0 --mode 640x480 --panning 2560x1440'
 alias XRS='xrandr --fb 2560x1440 --output DVI-0 --mode 2560x1440 --panning 0x0'
+alias pc1='ping -c1'
+alias c=cat
 [ -t 0 ] && stty erase ^? kill ^u
 ulimit -c 30000
 unset i
