@@ -1,9 +1,9 @@
 #!/bin/sh
 #\
-#set -x;#\
-if [ -z "$1" ];then i=PATH;#\
-else case $1 in m*|M*)i=MANPATH;; l*|L*)i=LD_LIBRARY_PATH;; c*|C*)i=CPLUS_INCLUDE_PATH;; p*|P*)i=PKG_CONFIG_PATH;; i*|I*)i=INFOPATH;; *)i=PATH;; esac;#\
-fi;#\
+#set -x;\
+if [ -z "$1" ];then i=PATH;\
+else case $1 in m*|M*)i=MANPATH;; l*|L*)i=LD_LIBRARY_PATH;; c*|C*)i=CPLUS_INCLUDE_PATH;; p*|P*)i=PKG_CONFIG_PATH;; i*|I*)i=INFOPATH;; *)i=PATH;; esac;\
+fi;\
 exec tclsh $0 $i
 set i [lindex $argv 0]
 if {![info exists env($i)]} {return 0}

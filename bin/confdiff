@@ -1,6 +1,6 @@
 #!/bin/sh
-fileA=$(tempfile)
-fileB=$(tempfile)
+fileA=$(mktemp)
+fileB=$(mktemp)
 { [ $# -eq 2 ]&&co -p$2 .config||cat .config; }|egrep -v '^($|#)'|sort >$fileB
 co -p$1 .config|egrep -v '^($|#)'|sort >$fileA
 diff $fileA $fileB

@@ -19,19 +19,19 @@ fi
 do_the_grep "$@"
 }
 
-# If we have GNU grep, set GNU args for grep & find.
-# (I've assumed sed's -u arg is standard,
-#  if that's wrong then fix it here and please let me know)
-# I expect ufl & fl will fail with non-GNU utils, but sfl should still work.
+# If we have GNU grep, set GNU args for grep, find & sed.
+# I expect ufl & fl will fail with non-GNU utils,
+# but the others should still work.
 try_gnu_args()
 {
   grep --version >/dev/null 2>&1 &&
-    { n=-noleaf; lb=--line-buffered; } || { n=; lb=; }
+    { n=-noleaf; lb=--line-buffered; INAME=-iname; U=-u; P=-print0; Z=-0; } ||
+      { n=; lb=; INAME=-name; U=; P=; Z=; }
 }
 
 # Check for good invocation.
-# sfl is designed to be symlinked to one of the following.
-# which symlink is used determines behaviour.
+# sfl is designed to action symlinks to any of the following.
+# Using a symlink modifies behaviour.
 # list of symlinks:
 # lrwxrwxrwx  1 root root     3 2004-09-30 22:12 afl -> sfl
 # lrwxrwxrwx  1 root root     3 2004-09-30 22:12 aflc -> sfl
@@ -46,9 +46,18 @@ try_gnu_args()
 # lrwxrwxrwx  1 root root     3 2004-09-30 22:12 uflc -> sfl
 # lrwxrwxrwx  1 root root     3 2004-09-30 22:12 ufll -> sfl
 # lrwxrwxrwx  1 root root     3 2004-09-30 22:12 ufllc -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:17 xfl -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:19 xflc -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:19 xfll -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:19 xfllc -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:19 yfl -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:20 yflc -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:19 yfll -> sfl
+# lrwxrwxrwx  1 root root     3 Jul  3 15:20 yfllc -> sfl
 set_personality()
 {
-  j=$(basename $0)
+  j=`basename $0`
+  named_extensions_only=true
   case $j in
   u*)
     f='.. -maxdepth 2 -mindepth 2'
@@ -65,6 +74,16 @@ set_personality()
   f*)
     f='. -maxdepth 1'
     w=w
+    ;;
+  x*)
+    f=.
+    w=w
+    named_extensions_only=false
+    ;;
+  y*)
+    f=.
+    w=""
+    named_extensions_only=false
     ;;
   *)
     echo bad symlink of sfl to $j
@@ -97,30 +116,35 @@ set_personality()
 # Actually do the grep
 do_the_grep()
 {
-  { find $f $n -depth -type f \( \
-      -name "*.c" \
-      -o -name "*.cpp" \
-      -o -name "*.cxx" \
-      -o -name "*.cc" \
-      -o -name "*.f" \
-      -o -name "*.for" \
-      -o -name "*.S" \
-      -o -name "*.h" \
-      -o -name "*.java" \
-      -o -name "*.exp" \
-      -o -name "*.tcl" \
-      -o -name "*.expect" \
-      -o -name "*.pl" \
-      -o -name "*.py" \
-      -o -iname "makefile" \
-      -o -name "Kconfig" \
-      -o -name "*.i" \
-      -o -name "*.l" \
-      -o -name "*.lex" \
-      -o -name "*.y" \
-      -o -name "*.yacc" \
-      -o -name "*.sh" \
-      \) -print0 | xargs -0 -n 32 -r grep $lb -${i}s${w}n "$@" -- \
-        "$k" /dev/null; } | sed -u 's?^[.]/??'
+  if $named_extensions_only
+  then
+    names='\( -name "*.c"
+      -o -name "*.cpp"
+      -o -name "*.cxx"
+      -o -name "*.cc"
+      -o -name "*.f"
+      -o -name "*.for"
+      -o -name "*.S"
+      -o -name "*.h"
+      -o -name "*.java"
+      -o -name "*.exp"
+      -o -name "*.tcl"
+      -o -name "*.expect"
+      -o -name "*.pl"
+      -o -name "*.py"
+      -o $INAME "makefile"
+      -o -name "Kconfig"
+      -o -name "*.i"
+      -o -name "*.l"
+      -o -name "*.lex"
+      -o -name "*.y"
+      -o -name "*.yacc"
+      -o -name "*.sh"\)'
+  else
+    names=""
+  fi
+  { eval find $f $n -depth -type f $names $P |
+      xargs $Z -n 32 -r grep $lb -${i}s${w}n "$@" -- "$k" /dev/null; } |
+      sed $U 's?^[.]/??'
 }
 main "$@"

@@ -26,7 +26,13 @@ $use_tar ||
   if [ $i != $1 ];then use_zip=true;else use_zip=false;fi
 }
 # Most common first
-m="./$i/README $i/README $i/README.$i ./$i/README.$i $i/README.txt $i/README.TXT"
+m="./$i/README \
+$i/README \
+$i/README.$i \
+./$i/README.$i \
+$i/README.txt \
+$i/README.TXT \
+readme.txt"
 if $use_tar;then  # Always exits
   for j in $m;do
     if tar -tf $1 $j >/dev/null 2>&1;then

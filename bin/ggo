@@ -1,9 +1,10 @@
 #!/bin/bash -p
 # Hide shell commands from expect \
+#set -x;\
 [ -n "$1" ] || { echo "first arg must be program name" >&2;exit 1; } ;\
 [ -x "$1" ] || { echo "$1 is not a program" >&2;exit 1; } ;\
-export PROGNAME=$1;shift;\
-exec expect "$0" "$@"
+PROGNAME=$1;export PROGNAME;shift;\
+exec expect -- "$0" "$@"
 
 # Set up
 # === ==

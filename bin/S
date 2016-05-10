@@ -1,0 +1,12 @@
+#!/bin/sh
+# In-place sort
+#set -x
+
+cleanup() { rm $mytmp; exit $1; }
+
+[ $# -ge 1 ] || { echo "Usage:- $(basename "$0") <file> [<sort options>]" >&2; exit 1; }
+A1=$1
+shift
+mytmp=$(mktemp) || exit 1
+cat $A1 | sort "$@" >$mytmp || cleanup 1
+mv $mytmp $A1 || cleanup 1
