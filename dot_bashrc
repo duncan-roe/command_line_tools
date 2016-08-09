@@ -13,14 +13,35 @@ FIGNORE=".o:.bu:~"
   PS1='\h@\t\w\$ '
   IGNOREEOF=5
   [ "$TERM" = xterm ] &&
-    PS1='\[\e]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/~}\a\]\t\$ '
+  {
+    # Cater for change to parameter / tilde substitution at 4.3
+    [ ${BASH_VERSION:0:1} -le 4 -a ${BASH_VERSION:2:1} -le 2 ] &&
+      PS1='\[\e]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/~}\a\]\t\$ ' ||
+      PS1='\[\e]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/"~"}\a\]\t\$ '
+  }
 }
 : () { cd "../$1"; }
 / () { cd "./$1"; }
-pd() { [ -n "$1" ] && { [ "${1:0:1}" != "-" ] && pushd +"$1" >/dev/null 2>&1 ||
-  pushd "$1" >/dev/null;return; }
-  pushd >/dev/null; }
-pdd(){ [ -n "$1" ]||{ echo "pdd: missing arg" >&2;return 1; }; pd "$1";pd;pd 1; }
+pd()
+{
+  [ -n "$1" ] &&
+  {
+    # If arg is not a number then just go there
+    [ "$1" -eq "$1" ] 2>/dev/null || { pushd "$1" >/dev/null; return; }
+
+    [ "$1" -gt 0 ] && { pushd +"$1" >/dev/null; return; }
+    pushd "$1" >/dev/null
+    return
+  }
+  pushd >/dev/null
+}
+pdd()
+{
+  [ -n "$1" ]||{ echo "pdd: missing arg" >&2;return 1; }
+  pd "$1"
+  pd
+  pd 1
+}
 GS(){ git status "$@"|cat; }
 GD(){ git diff "$@"|cat; }
 GL(){ git log "$@"|cat; }
