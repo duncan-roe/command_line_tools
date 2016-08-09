@@ -30,7 +30,6 @@ order of appearance, these are:-
       in this case bin/s is obeyed instead.
  rdy: alternative to "s" which just tells you what shell level you're at,
       rather than terminating the shell if it's above 1.
- CD : defeats bash sourcepath option (you see where you really are)
  ]  : disaplays directory stack 1 entry/line numbered
  ]] : displays subset of directory stack with entries containing $1
  XRB: Gives a panning 640x480 display (for running old games).

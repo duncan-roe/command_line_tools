@@ -48,7 +48,6 @@ alias ..='cd ..'
 [ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
-alias CD='cd `/bin/pwd`'
 alias ]='dirs -v'
 alias ]]="]|glb "
 alias \
