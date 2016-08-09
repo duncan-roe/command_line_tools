@@ -12,4 +12,4 @@ case "$1" in
   i=$1
   ;;
 esac
-find $i -follow -name RCS -type d -print -exec megatstclean - {} \;
+find $i -follow -name RCS \( -type d -o -type l \) -print -exec megatstclean - {} \;
