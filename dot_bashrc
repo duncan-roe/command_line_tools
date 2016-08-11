@@ -26,10 +26,9 @@ pd()
 {
   [ -n "$1" ] &&
   {
-    # If arg is not a number then just go there
-    [ "$1" -eq "$1" ] 2>/dev/null || { pushd "$1" >/dev/null; return; }
+    # Drop through if arg is not a number
+    [ "$1" -gt 0 ] 2>/dev/null && { pushd +"$1" >/dev/null; return; }
 
-    [ "$1" -gt 0 ] && { pushd +"$1" >/dev/null; return; }
     pushd "$1" >/dev/null
     return
   }
