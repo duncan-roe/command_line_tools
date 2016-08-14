@@ -139,7 +139,7 @@ do_the_grep()
       -o -name "*.lex"
       -o -name "*.y"
       -o -name "*.yacc"
-      -o -name "*.sh"\)'
+      -o -name "*.sh" \)'
   else
     names=""
   fi
