@@ -4,7 +4,10 @@ for i in $j
 do
   echo $PATH|grep $i >/dev/null || { [ -d $i ] && PATH=$i:$PATH; }
 done
-echo $PATH|grep -w sbin>/dev/null || PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+for i in /usr/local/sbin /usr/sbin /sbin
+do
+  echo $PATH|grep -qE "(^|:)$i(:|$)" || { [ -d $i ] && PATH=$PATH:$i; }
+done
 HISTIGNORE='&:]:pd *:v:pd:popd*'
 FIGNORE=".o:.bu:~"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
