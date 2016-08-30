@@ -22,5 +22,5 @@ what the <libraries> parameter(s) are for. If you need <libraries> but don't
 give them, you will usually get appropriate error messages.
 
 TO BUILD: type "make".
- If you run 32 and 64 bit simulatneously, you need to build a version of findit
+ If you run 32 and 64 bit simultaneously, you need to build a version of findit
 for each.

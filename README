@@ -4,11 +4,14 @@ The majority of these are scripts or symbolic links to scripts.
 3 are compiled programs: sources for findit and strerror are here,
 and the source for q is in a sibling repository.
 
-These commands are in the bin directory below. You can add them to your ~/bin or
-make bin your ~/bin if you don't already have one. ~/bin should then show up in
-your PATH; fix your ~/.bashrc if it doesn't. Alternatively, you could add the
-bin commands to some other directory already in your PATH such as
-/usr/local/bin.
+There are no releases of command-line tools.
+You are recommended to clone it instead, and use "git pull" to get updates.
+
+Most commands are in the bin directory below.
+You could add them to your ~/bin or to /usr/local/bin,
+but it's recommended to put command_line_tools/bin in your PATH
+and only put local variants in ~/bin or /usr/local/bin. (You will have at least
+2 local variants: the compiled versions of findit and strerror).
 
 Some commands come straight from dot_bashrc (which is a copy of my .bashrc). In
 order of appearance, these are:-
@@ -21,7 +24,7 @@ order of appearance, these are:-
       Likely fails with directories named "1", "2" &c.
  pdd: (pd down) is like pd but the new directory is inserted below the current
       entry in the stack rather than above. If (like me) you like to keep the
-      directory stack in order then you can use pdd to a subdirto do that.
+      directory stack in order then you can use pdd to a subdir to do that.
  GS / GD / GL : git {status,display,log} in monochrome w/out pager
  .. : cd to parent directory
  s  : unwinds one level of shell invocation, i.e. it exits.
@@ -30,7 +33,7 @@ order of appearance, these are:-
       in this case bin/s is obeyed instead.
  rdy: alternative to "s" which just tells you what shell level you're at,
       rather than terminating the shell if it's above 1.
- ]  : disaplays directory stack 1 entry/line numbered
+ ]  : displays directory stack 1 entry/line numbered
  ]] : displays subset of directory stack with entries containing $1
  XRB: Gives a panning 640x480 display (for running old games).
       You will likely need to customise it to match your screen resolution
