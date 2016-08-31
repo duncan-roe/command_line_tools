@@ -25,8 +25,16 @@ do_the_grep "$@"
 try_gnu_args()
 {
   grep --version >/dev/null 2>&1 &&
-    { n=-noleaf; lb=--line-buffered; INAME=-iname; U=-u; P=-print0; Z=-0; } ||
-      { n=; lb=; INAME=-name; U=; P=; Z=; }
+  {
+    n=-noleaf
+    lb=--line-buffered
+    INAME=-iname
+    U=-u
+    P=-print0
+    Z=-0
+    X=-xdev
+  } ||
+    { n=; lb=; INAME=-name; U=; P=; Z=; X=-mount; }
 }
 
 # Check for good invocation.
@@ -143,7 +151,7 @@ do_the_grep()
   else
     names=""
   fi
-  { eval find $f $n -depth -type f $names $P |
+  { eval find $f $X $n -depth -type f $names $P |
       xargs $Z -n 32 -r grep $lb -${i}s${w}n "$@" -- "$k" /dev/null; } |
       sed $U 's?^[.]/??'
 }
