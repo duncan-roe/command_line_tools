@@ -1,0 +1,22 @@
+Welcome to my command-line tools!
+
+This directory contains files which modify the action of some of the tools.
+
+You can dot any of the .sh files from Bash or any other Bourne shell directly,
+and you might like to place some of them in /etc/profile.d
+
+Alphabetically ordered list:-
+ command_line_tools.sh     : Puts command_line_tools/bin in your PATH.
+                             Recommended to go in /etc/profile.d
+                             Safe to dot multiple times
+                             (will only append command_line_tools/bin once).
+ sfl_glob_patterns.sh      : Fairly comprehensive list of file suffices for
+                             sfl and friends to search. Corresponds to what sfl
+                             used to search before the introduction of
+                             SFL_GLOB_PATTERNS to the environment.
+                             Recommend to put one of the sfl_glob_patterns
+                             files into /etc/profile.d
+ sfl_glob_patterns_long.sh : sfl_glob_patterns.sh with some additional suffices,
+                             (in fact the list I use).
+                             Recommend to put one of the sfl_glob_patterns
+                             files into /etc/profile.d
