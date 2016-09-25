@@ -10,6 +10,53 @@ Alphabetically ordered list:-
                              Recommended to go in /etc/profile.d
                              Safe to dot multiple times
                              (will only append command_line_tools/bin once).
+ runindent_options_brkly.sh : indent options to format in the style of the
+                              original Berkeley indent program.
+                              You may want to put one of the runindent_options
+                              files into /etc/profile.d
+ runindent_options_gnu.sh : indent options to format in the GNU coding style
+                            as preferred by the GNU project.
+                            You may want to put one of the runindent_options
+                            files into /etc/profile.d
+ runindent_options_kernel.sh : indent options to format in the Linux style as
+                               used in the linux kernel code and drivers.
+                               Code generally has to follow the Linux coding
+                               style to be accepted.
+                               The blank lines in the file are there to give the
+                               most concise output from the command
+                               diff -y -W25 runindent_options_q.sh \
+                                 runindent_options_kernel.sh
+                               You may want to put one of the runindent_options
+                               files into /etc/profile.d
+ runindent_options_kr.sh : indent options to format in the Kernighan & Ritchie
+                           style as used throughout their well-known book
+                           "The C Programming Language".
+                           You may want to put one of the runindent_options
+                           files into /etc/profile.d
+ runindent_options_q.sh : indent options used to format the C sources in
+                          command_line_tools and also the sibling q editor
+                          repository.
+                          This is how runindent always worked before the
+                          introduction of RUNINDENT_OPTIONS to the environment.
+                          If RUNINDENT_OPTIONS is not in the environment then
+                          you still get the old behaviour
+ runindent_typedefs_q.sh : Sets up the RUNINDENT_TYPEDEFS env var to cover
+                           the sources formatted by runindent_options_q.sh.
+                           typedef (-T) options are different from all other
+                           indent options in that they perform no formatting but
+                           instead tell indent which tokens are to be treated as
+                           type declarations.
+                           This in turn affects how some formatting options
+                           work (in particular -di<n> but there are others).
+                           You will likely want to make up a different typedefs
+                           file for each project, so treat this file as a
+                           template for doing so. You can extract typdef names
+                           from header files, gcc -E (preprocessor) output,
+                           manual inspection or whatever.
+                           This is how runindent always worked before the
+                           introduction of env var RUNINDENT_TYPEDEFS.
+                           If RUNINDENT_TYPEDEFS is not in the environment then
+                           you still get the old behaviour
  sfl_glob_patterns.sh      : Fairly comprehensive list of file suffices for
                              sfl and friends to search. Corresponds to what sfl
                              used to search before the introduction of
@@ -20,3 +67,5 @@ Alphabetically ordered list:-
                              (in fact the list I use).
                              Recommend to put one of the sfl_glob_patterns
                              files into /etc/profile.d
+                             
+N.B files in /etc/profile.d have to have execute access to have any effect
