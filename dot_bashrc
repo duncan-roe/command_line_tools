@@ -80,7 +80,7 @@ alias pc1='ping -c1'
 alias c=cat
 [ -t 0 ] && stty erase ^? kill ^u
 ulimit -c 30000
-unset i
+unset i j
 shopt -u sourcepath
 shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
