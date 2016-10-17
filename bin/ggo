@@ -15,7 +15,7 @@ if {$argc >= 2 && [string equal -nocase -length 2 [lindex $argv 0] -a]} \
   {set args {};set nextarg 0}
 
 # start gdb, and put in some nice settings
-spawn gdb -n
+spawn gdb -n -q
 expect {(gdb) }
 exp_send "file $env(PROGNAME)\r"
 expect {(gdb) }
