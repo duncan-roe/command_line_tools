@@ -129,12 +129,30 @@ do_the_grep()
     names="$SFL_GLOB_PATTERNS"
     if [ -z "$names" ]
     then
-      echo -e "\nNo SFL_GLOB_PATTERNS in environment:" >&2
-      echo -e "using minimal pattern set\n" >&2
-      names='\( -name "*.c"
-        -o -name "*.h"
-        -o $INAME "makefile"
-        -o -name "*.sh" \)'
+      names='\(
+ $INAME "makefile"
+ -o -name "*.S"
+ -o -name "*.c"
+ -o -name "*.cc"
+ -o -name "*.cpp"
+ -o -name "*.cxx"
+ -o -name "*.exp"
+ -o -name "*.expect"
+ -o -name "*.f"
+ -o -name "*.for"
+ -o -name "*.h"
+ -o -name "*.i"
+ -o -name "*.java"
+ -o -name "*.l"
+ -o -name "*.lex"
+ -o -name "*.pl"
+ -o -name "*.py"
+ -o -name "*.sh"
+ -o -name "*.tcl"
+ -o -name "*.y"
+ -o -name "*.yacc"
+ -o -name "Kconfig"
+ \)'
     fi
   else
     names=""

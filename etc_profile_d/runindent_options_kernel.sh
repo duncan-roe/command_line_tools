@@ -2,8 +2,8 @@
 #
 # Dot this file to make runindent format according to the Linux style
 #
-# To make this file the installation default, place a copy of it in
-# /etc/profile.d, and make it executable (chmod a+x runindent_options_kernel.sh)
+# To make this file the installation default, symlink to it from
+# /etc/profile.d, or copy it there.
 #
 # (Blank lines are there to give the most concise output from the command
 #  > diff -y -W25 runindent_options_q.sh runindent_options_kernel.sh

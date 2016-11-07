@@ -2,10 +2,10 @@
 if [ -z "$1" ];then f=hee;else f=$1;fi
 grep -in warn $f /dev/null
 grep -in error $f /dev/null
-grep -iwn no $f /dev/null
+[ -n "$CHKHEE_NO_OK" ] || grep -iwn no $f /dev/null
 grep -iwn exit $f /dev/null
 grep -iwn fault $f /dev/null
 grep -iwn bad $f /dev/null
 grep -in fail $f /dev/null
-grep -wn not $f /dev/null|egrep 'found|exist'
+grep -wn not $f /dev/null|glb 'found|exist'
 grep -wn undefined $f /dev/null

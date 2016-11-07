@@ -1,12 +1,12 @@
 # Puts the list of glob patterns for sfl into the environment
 #
 # Dot this file to make sfl and associated commands run the same way as they
-# did when sfl had a long list of glob patterns to search.
+# would if SFL_GLOB_PATTERNS were not in the environment.
 #
 # $INAME will expand to -iname for GNU find or -name for others
 #
-# To make this file the installation default, place a copy of it in
-# /etc/profile.d, and make it executable (chmod a+x sfl_glob_patterns.sh).
+# To make this file the installation default, symlink to it from
+# /etc/profile.d, or copy it there.
 #
 SFL_GLOB_PATTERNS='\(
  $INAME "makefile"

@@ -18,8 +18,11 @@ Alphabetic list of commands:-
  bu     : Renames <file> to <file>.bu.
  chkhee : Tries to report only errors in the output from "make". By default
           expects the output from make to be in a file called "hee" after
-          make 2>&1 | tee hee
-          but it accepts a filename argument to replace hee.
+            make 2>&1 | tee hee
+          but it accepts a filename argument to replace "hee".
+          To suppress the check for the word "no",
+            export CHKHEE_NO_OK=yes
+          before running chkhee.
  cmbak  @ Like cmbu but for .bak files.
  cmbu   : Compares <file>.bu with <file> (oldest file first).
           Accepts diff options but you have to put them at the end of the line.

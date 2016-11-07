@@ -3,8 +3,8 @@
 # Dot this file to make runindent format in the style of the C sources in
 # command_line_tools and also the sibling q editor repository
 #
-# To make this file the installation default, place a copy of it in
-# /etc/profile.d, and make it executable (chmod a+x runindent_options_q.sh).
+# To make this file the installation default, symlink to it from
+# /etc/profile.d, or copy it there.
 #
 RUNINDENT_OPTIONS="
 -nbad

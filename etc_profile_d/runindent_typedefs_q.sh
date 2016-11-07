@@ -3,8 +3,8 @@
 # This file contains runindent's built-in defaults, so there is no need to dot
 # it. Rather, this file is intended to be a template for one that you create.
 #
-# To make this file the installation default, place a copy of it in
-# /etc/profile.d, and make it executable (chmod a+x runindent_typedefs_q.sh).
+# To make this file the installation default, symlink to it from
+# /etc/profile.d, or copy it there.
 #
 RUNINDENT_TYPEDEFS='
 -TFILE

@@ -3,7 +3,7 @@ Welcome to my command-line tools!
 This directory contains files which modify the action of some of the tools.
 
 You can dot any of the .sh files from Bash or any other Bourne shell directly,
-and you might like to place some of them in /etc/profile.d
+and you might like to place [symbolic links to] some of them in /etc/profile.d
 
 Alphabetically ordered list:-
  command_line_tools.sh     : Puts command_line_tools/bin in your PATH.

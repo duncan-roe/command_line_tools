@@ -5,8 +5,8 @@
 #
 # $INAME will expand to -iname for GNU find or -name for others
 #
-# To make this file the installation default, place a copy of it in
-# /etc/profile.d, and make it executable (chmod a+x sfl_glob_patterns_long.sh).
+# To make this file the installation default, symlink to it from
+# /etc/profile.d, or copy it there.
 #
 SFL_GLOB_PATTERNS='\(
  $INAME "makefile"
@@ -35,7 +35,7 @@ SFL_GLOB_PATTERNS='\(
  -o -name "*.vala"
  -o -name "*.y"
  -o -name "*.yacc"
- -o -name "Kconfig"
+ -o -name "*Kconfig*"
  \)'
 
 # Get rid of newline characters
