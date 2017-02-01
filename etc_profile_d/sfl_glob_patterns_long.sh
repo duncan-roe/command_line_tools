@@ -30,6 +30,7 @@ SFL_GLOB_PATTERNS='\(
  -o -name "*.pri"
  -o -name "*.prl"
  -o -name "*.py"
+ -o -name "*.qm"
  -o -name "*.sh"
  -o -name "*.tcl"
  -o -name "*.vala"

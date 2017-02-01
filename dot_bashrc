@@ -49,9 +49,6 @@ GD(){ git diff "$@"|cat; }
 GL(){ git log "$@"|cat; }
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info
-export ARCH=$(arch)
-[ "$ARCH" != i686 ] || unset ARCH
-[ "$ARCH" = x86_64 ] && export PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
