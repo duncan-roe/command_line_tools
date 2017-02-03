@@ -1,0 +1,18 @@
+unset_path_functions () { unset -f unset_path_functions append_path; unset LIB; }
+
+append_path ()
+{
+  [ $# -ne 0 ] || return 0
+  [ -d "$1" ] || return 0
+  [ $# -eq 2 ] && PATHNAME=$2 || PATHNAME=PATH
+  if [ ! "${!PATHNAME}" = "" ]; then
+    echo :${!PATHNAME}: | grep -q ":${1}:" ||
+      eval $PATHNAME=${!PATHNAME}:"$1"
+  else
+    eval $PATHNAME="$1"
+  fi
+  export $PATHNAME
+  
+  # set LIB for those scripts that can use it
+}
+[ "$(uname -m)" = x86_64 ] && LIB=lib64 || LIB=lib

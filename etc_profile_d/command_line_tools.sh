@@ -3,12 +3,7 @@
 # Change the next line to suit your installation
 newpath=/usr/local/command_line_tools/bin
 
-if [ -d $newpath ]
-then
-  echo ":${PATH}:" | grep -q :${newpath}: ||
-  {
-    PATH="${PATH}:${newpath}"
-    export PATH
-  }
-fi
+. /etc/profile.d/path_functions_sh
+append_path $newpath
+unset_path_functions
 unset newpath

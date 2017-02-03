@@ -6,10 +6,24 @@ You can dot any of the .sh files from Bash or any other Bourne shell directly,
 and you might like to place [symbolic links to] some of them in /etc/profile.d
 
 Alphabetically ordered list:-
+ 
  command_line_tools.sh     : Puts command_line_tools/bin in your PATH.
                              Recommended to go in /etc/profile.d
                              Safe to dot multiple times
                              (will only append command_line_tools/bin once).
+ 
+ path_functions_sh : Creates 2 functions and 1 variable to augment .sh scripts:
+                   - append_path() appends the given directory to the given
+                     path environment variable (default is PATH) provided that:
+                     + the directory actually exists, and
+                     + the directory is not in the variable already
+                   - The LIB shell variable is set to "lib64" if the
+                     architecture is x86_64 and to "lib" otherwise;
+                     this allows one to keep scripts that mention /lib{,64}
+                     under revision control without regard to bit-ness
+                     (e.g. java sdk)
+                   - unset_path_functions() unsets created scripts and variables
+ 
  runindent_options_brkly.sh : indent options to format in the style of the
                               original Berkeley indent program.
                               You may want to put one of the runindent_options
@@ -18,6 +32,7 @@ Alphabetically ordered list:-
                             as preferred by the GNU project.
                             You may want to put one of the runindent_options
                             files into /etc/profile.d
+ 
  runindent_options_kernel.sh : indent options to format in the Linux style as
                                used in the linux kernel code and drivers.
                                Code generally has to follow the Linux coding
@@ -28,11 +43,13 @@ Alphabetically ordered list:-
                                  runindent_options_kernel.sh
                                You may want to put one of the runindent_options
                                files into /etc/profile.d
+ 
  runindent_options_kr.sh : indent options to format in the Kernighan & Ritchie
                            style as used throughout their well-known book
                            "The C Programming Language".
                            You may want to put one of the runindent_options
                            files into /etc/profile.d
+ 
  runindent_options_q.sh : indent options used to format the C sources in
                           command_line_tools and also the sibling q editor
                           repository.
@@ -40,6 +57,7 @@ Alphabetically ordered list:-
                           introduction of RUNINDENT_OPTIONS to the environment.
                           If RUNINDENT_OPTIONS is not in the environment then
                           you still get the old behaviour
+ 
  runindent_typedefs_q.sh : Sets up the RUNINDENT_TYPEDEFS env var to cover
                            the sources formatted by runindent_options_q.sh.
                            typedef (-T) options are different from all other
@@ -57,12 +75,14 @@ Alphabetically ordered list:-
                            introduction of env var RUNINDENT_TYPEDEFS.
                            If RUNINDENT_TYPEDEFS is not in the environment then
                            you still get the old behaviour
+ 
  sfl_glob_patterns.sh      : Fairly comprehensive list of file suffices for
                              sfl and friends to search. Corresponds to what sfl
                              used to search before the introduction of
                              SFL_GLOB_PATTERNS to the environment.
                              Recommend to put one of the sfl_glob_patterns
                              files into /etc/profile.d
+ 
  sfl_glob_patterns_long.sh : sfl_glob_patterns.sh with some additional suffices,
                              (in fact the list I use).
                              Recommend to put one of the sfl_glob_patterns
