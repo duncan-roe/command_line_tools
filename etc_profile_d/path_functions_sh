@@ -1,4 +1,4 @@
-unset_path_functions () { unset -f unset_path_functions append_path; unset LIB; }
+unset_path_functions () { unset -f unset_path_functions append_path; unset LIB PATHNAME; }
 
 append_path ()
 {
