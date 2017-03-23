@@ -2,11 +2,11 @@ j="/usr/local/bin /home/dunc/command_line_tools/bin /home/dunc/bin"
 [ $(uname -m) = x86_64 ] && j="$j /home/dunc/bin64"
 for i in $j
 do
-  echo $PATH|grep $i >/dev/null || { [ -d $i ] && PATH=$i:$PATH; }
+  echo :$PATH:|grep -q :$i: || { [ -d $i ] && PATH=$i:$PATH; }
 done
 for i in /usr/local/sbin /usr/sbin /sbin
 do
-  echo $PATH|grep -qE "(^|:)$i(:|$)" || { [ -d $i ] && PATH=$PATH:$i; }
+  echo :$PATH:|grep -q :$i: || { [ -d $i ] && PATH=$PATH:$i; }
 done
 HISTIGNORE='&:]:pd *:v:pd:popd*'
 FIGNORE=".o:.bu:~"
