@@ -1,15 +1,20 @@
 #!/bin/sh
 # \
 exec wish "$0"
+set d rgb:00/00/00
+entry .e -textvar d -width 12
 # From figure 16.2
 scale .r -label Red -from 0 -to 255 -length 10c -orient hor -command nC
 scale .g -label Green -from 0 -to 255 -length 10c -orient hor -command nC
 scale .b -label Blue -from 0 -to 255 -length 10c -orient hor -command nC
 frame .s -height 15m -width 6c
 pack .r .g .b -side top
+pack .e -side bottom
 pack .s -side bottom -pady 2m
 proc nC v \
 {
+  global d
   set c [format #%02x%02x%02x [.r get] [.g get] [.b get]]
   .s configure -bg $c
+  set d [format rgb:%02x/%02x/%02x [.r get] [.g get] [.b get]]
 };# proc nC v

@@ -1,0 +1,13 @@
+xterm*vt100.color0:    Black
+xterm*vt100.color1:      Red
+xterm*vt100.color2:    Green
+xterm*vt100.color3:   Yellow
+xterm*vt100.color4:     Blue
+xterm*vt100.color5:  Magenta
+xterm*vt100.color6:     Cyan
+xterm*vt100.color7:    White
+xterm.backarrowKeyIsErase: true
+XTerm*background: black
+Xterm*XtDefaultBackground: black
+Xterm*XtDefaultForeground: white
+XTerm*foreground: white

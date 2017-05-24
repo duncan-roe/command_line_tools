@@ -151,10 +151,10 @@ Alphabetic list of commands:-
  unsave @ Like unbu but for .save files.
  un_orig@ Like unbu but for _orig files.
  un~    @ Like unbu but for ~ files.
- v      : ls with pagination. Output is monochrome but files are classified
+ v      : ls with pagination. Output is in colour and files are classified
           (e.g. trailing "*" for executable). Entries are sorted by lines
           instead of by columns as is appropriate for pagination.
- vc     : Like v but ls output is in colour.
+ vc     : Like v but ls output is monochrome.
  xfl    @ Like sfl but search all files
  xflc   @ Like sflc but search all files
  xfll   @ Like sfll but search all files

@@ -44,9 +44,6 @@ pdd()
   pd
   pd 1
 }
-GS(){ git status "$@"|cat; }
-GD(){ git diff "$@"|cat; }
-GL(){ git log "$@"|cat; }
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
@@ -68,6 +65,9 @@ alias ..='cd ..'
 alias rdy='echo $SHLVL'
 alias ]='dirs -v'
 alias ]]="]|glb "
+alias GS='git status'
+alias GD='git diff'
+alias GL='git log'
 alias \
   XRB='xrandr --fb 2560x1440 --output DVI-0 --mode 640x480 --panning 2560x1440'
 alias XRS='xrandr --fb 2560x1440 --output DVI-0 --mode 2560x1440 --panning 0x0'
