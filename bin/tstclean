@@ -3,7 +3,7 @@
 if [ ! -d RCS ];then echo "No RCS dir here";exit 1;fi
 for r in RCS/*,v RCS/.??*,v;do
   if [ "$r" != "RCS/*,v" -a "$r" != "RCS/.??*,v" ];then
-    i="$(basename "$(basename $r)" ,v)"
+    i="$(basename "$(basename "$r")" ,v)"
     if [ -f "$i" ];then
       rlog -L -h "$i"|grep Working
       rcsdiff $* "$i" 2>&1|egrep -v '============|RCS file: RCS/|retrieving revision'
