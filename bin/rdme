@@ -32,6 +32,8 @@ $i/README.$i \
 ./$i/README.$i \
 $i/README.txt \
 $i/README.TXT \
+$i/README.md \
+$i/README.rst \
 readme.txt"
 if $use_tar;then  # Always exits
   for j in $m;do
