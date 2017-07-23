@@ -1,17 +1,10 @@
 #!/bin/sh
-
-nofile () \
-{
-    echo -n "no "
-    n=false
-    for j in $m;do
-      if $n;then echo -n " or ";else n=true;fi
-      echo -n $j
-    done
-    echo " in $1"
-    echo
-}
-found=false;
+#set -x
+len=100000    # Huge dummy initial value
+readme=""     # No README found yet
+retcod=1
+F=$(tempfile) # Need this to avoid piping into read
+exec 3<$F
 use_tar=false
 for k in tar tar.gz tgz tar.bz2 tbz tar.xz txz;do
   i=$(basename $1 .$k)
@@ -25,47 +18,38 @@ $use_tar ||
   i=$(basename $1 .zip)
   if [ $i != $1 ];then use_zip=true;else use_zip=false;fi
 }
-# Most common first
-m="./$i/README \
-$i/README \
-$i/README.$i \
-./$i/README.$i \
-$i/README.txt \
-$i/README.TXT \
-$i/README.md \
-$i/README.rst \
-readme.txt"
-if $use_tar;then  # Always exits
-  for j in $m;do
-    if tar -tf $1 $j >/dev/null 2>&1;then
-      found=true
-      break
+if $use_tar;then
+  tar tf $1 | grep -i readme >$F
+  while read -u3 a
+  do
+    if [ ${#a} -lt $len ];then
+      readme=$a
+      len=${#a}
     fi
   done
-  if $found;then
-    tar -xOf $1 $j
-    exit
+  if [ -n "$readme" ];then
+    tar Oxf $1 $readme
+    retcod=0
   else
-    nofile $1
-    tar -tf $1
-    exit 1
+    echo "No README in $1" >&2
   fi
-fi
-if $use_zip;then
-  for j in $m;do
-    if unzip -t $1 $j >/dev/null 2>&1;then
-      found=true
-      break
+elif $use_zip;then
+  unzip -l $1 | grep -i readme >$F
+  while read -u3 d c b a
+  do
+    if [ ${#a} -lt $len ];then
+      readme=$a
+      len=${#a}
     fi
   done
-  if $found;then
-    unzip -p $1 $j
+  if [ -n "$readme" ];then
+    unzip -p $1 $readme
+    retcod=0
   else
-    nofile $1
-    unzip -l $1
-    exit 1
+    echo "No README in $1" >&2
   fi
-  exit
+else
+  echo $1 not a recognised format >&2
 fi
-echo $1 not a recognised format
-exit 1
+rm $F
+exit $retcod
