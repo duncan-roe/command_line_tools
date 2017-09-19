@@ -5,6 +5,6 @@ mount >$T
 find . -mount -mindepth 1 -maxdepth 1 -type d |
   while read i
   do
-    grep -E -q "on $(readlink -f $i) " $T || du -sx $i
+    grep -E -q "on $(readlink -f "$i") " $T || du -sx "$i"
   done | sort -n
 rm $T
