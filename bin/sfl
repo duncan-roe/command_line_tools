@@ -27,7 +27,7 @@ try_gnu_args()
   grep --version >/dev/null 2>&1 &&
   {
     n=-noleaf
-    lb=--line-buffered
+    lb='--line-buffered -E'
     INAME=-iname
     U=-u
     P=-print0
@@ -158,7 +158,7 @@ do_the_grep()
     names=""
   fi
   { eval find $f $X $n -depth -type f $names $P |
-      xargs $Z -n 32 -r grep $lb -${i}s${w}n "$@" -- "$k" /dev/null; } |
+      xargs $Z -n 32 -r grep $lb -${i}Hs${w}n "$@" -- "$k"; } |
       sed $U 's?^[.]/??'
 }
 main "$@"
