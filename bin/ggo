@@ -39,11 +39,12 @@ set timeout 50
 exp_send "run $args\r"
 expect {(gdb) }
 set timeout 10
+#exp_internal 1
 for {set i $nextarg} {$i < $argc} {incr i} \
 {
   exp_send [lindex $argv $i]\r
   if {$i<$argc-1} \
-    {expect -re "\[(\]gdb\[)\] |\r\n>"}
+    {expect -re "\[(\]gdb\[)\] |\r\n>| \\(y or \\\[n\\\]\\) "}
 }                                  ;# for {set i 0} {$i < $argc} {incr i}
 interact -echo \\\\ \
 {
