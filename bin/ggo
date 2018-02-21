@@ -29,8 +29,6 @@ exp_send "set height 0\r"
 expect {(gdb) }
 exp_send "set print pretty\r"
 expect {(gdb) }
-exp_send "set confirm off\r"
-expect {(gdb) }
 exp_send "set unwindonsignal on\r"
 expect {(gdb) }
 exp_send "b main\r"
