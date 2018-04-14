@@ -1,4 +1,7 @@
-unset_path_functions () { unset -f unset_path_functions append_path; unset LIB PATHNAME; }
+unset_path_functions () { unset -f unset_path_functions append_path; unset LIB PATHNAME PREPEND; }
+
+export PREPEND=false
+prepend_path () { PREPEND=true; append_path "$@"; }
 
 append_path ()
 {
@@ -7,12 +10,19 @@ append_path ()
   [ $# -eq 2 ] && PATHNAME=$2 || PATHNAME=PATH
   if [ ! "${!PATHNAME}" = "" ]; then
     echo :${!PATHNAME}: | grep -q ":${1}:" ||
-      eval $PATHNAME=${!PATHNAME}:"$1"
+    {
+      if $PREPEND
+      then
+        eval $PATHNAME="$1":${!PATHNAME}
+      else
+        eval $PATHNAME=${!PATHNAME}:"$1"
+      fi
+    }
   else
     eval $PATHNAME="$1"
   fi
   export $PATHNAME
-  
+
   # set LIB for those scripts that can use it
 }
 [ "$(uname -m)" = x86_64 ] && LIB=lib64 || LIB=lib
