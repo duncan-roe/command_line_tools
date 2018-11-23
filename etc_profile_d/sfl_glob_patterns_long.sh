@@ -9,7 +9,7 @@
 # /etc/profile.d, or copy it there.
 #
 SFL_GLOB_PATTERNS='\(
- $INAME "makefile"
+ $INAME "makefile*"
  -o -name "*.S"
  -o -name "*.SlackBuild"
  -o -name "*.c"
@@ -26,6 +26,7 @@ SFL_GLOB_PATTERNS='\(
  -o -name "*.java"
  -o -name "*.l"
  -o -name "*.lex"
+ -o -name "*.mak"
  -o -name "*.pl"
  -o -name "*.pri"
  -o -name "*.prl"
