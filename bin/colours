@@ -11,6 +11,7 @@ frame .s -height 15m -width 6c
 pack .r .g .b -side top
 pack .e -side bottom
 pack .s -side bottom -pady 2m
+. config -background white
 proc nC v \
 {
   global d
