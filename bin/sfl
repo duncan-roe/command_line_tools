@@ -130,7 +130,7 @@ do_the_grep()
     if [ -z "$names" ]
     then
       names='\(
- $INAME "makefile"
+ $INAME "makefile*"
  -o -name "*.S"
  -o -name "*.c"
  -o -name "*.cc"
@@ -145,6 +145,7 @@ do_the_grep()
  -o -name "*.java"
  -o -name "*.l"
  -o -name "*.lex"
+ -o -name "*.mak"
  -o -name "*.pl"
  -o -name "*.py"
  -o -name "*.sh"
