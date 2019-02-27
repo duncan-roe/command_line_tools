@@ -22,6 +22,7 @@ SFL_GLOB_PATTERNS='\(
  -o -name "*.for"
  -o -name "*.h"
  -o -name "*.hh"
+ -o -name "*.hpp"
  -o -name "*.i"
  -o -name "*.java"
  -o -name "*.l"
