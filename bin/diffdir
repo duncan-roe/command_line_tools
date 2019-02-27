@@ -10,4 +10,4 @@ if [ -z "$1" -o -z "$2" ];then
   echo "Usage:- $(basename "$0") [diff opts] <dir1> <dir to be compared to dir1>"
   exit 1
 fi
-find $1 -name CVS -prune -o -name .git -prune -o -type d ! -name RCS -exec sh -c "diff $opts \"{}\" \"\$(echo {} | sed s+^$1+$2+)\"" \; 2>&1|glb -v '^Common subdirectories: '
+find $1 -name CVS -prune -o -name .git -prune -o -type d ! -name RCS -exec sh -c "diff $opts \"{}\" \"\$(echo {} | sed s?^$1?$2?)\"" \; 2>&1|glb -v '^Common subdirectories: '
