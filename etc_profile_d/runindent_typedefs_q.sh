@@ -11,11 +11,17 @@ RUNINDENT_TYPEDEFS='
 -Tbool
 -Tclock_t
 -Tchainbase
+-Tdatabk
+-Thddr
+-Tindxbk
 -Tmacro5
+-Tmapbk
+-Tofstbk
 -Tpagebk
 -Tscrbuf5
 -Tsiginfo_t
 -Tsize_t
+-Tsuppbk
 -Tuint16_t
 -Tuint32_t
 -Taction
