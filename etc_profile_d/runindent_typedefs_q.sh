@@ -12,6 +12,7 @@ RUNINDENT_TYPEDEFS='
 -Tclock_t
 -Tchainbase
 -Tmacro5
+-Tpagebk
 -Tscrbuf5
 -Tsiginfo_t
 -Tsize_t
