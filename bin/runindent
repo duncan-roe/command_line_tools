@@ -24,6 +24,7 @@
 -Tsiginfo_t
 -Tsize_t
 -Tsuppbk
+-Tint16_t
 -Tuint16_t
 -Tuint32_t
 -Taction
