@@ -59,8 +59,9 @@ Alphabetic list of commands:-
           Build and install from ../findit/
  fl     @ Like sfl but search CWD only.
  flc    @ Like fl but case-independent.
- ggo    + drives gdb with arbitrary gdb commands on the command line.
-          See README_ggo.
+ ggdb   + drives gdb with arbitrary gdb commands on the command line.
+          See README_ggdb.
+ ggo    + deprecated and no longer maintained predecessor to ggdb.
  glb    : Automatically adds "-E --line-buffered" to "grep".
           (glb == Grep Line Buffered). By using glb instead of grep in pipes,
           you see lines as soon as they are matched.

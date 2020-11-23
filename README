@@ -1,8 +1,7 @@
 Welcome to my command-line tools!
 
 The majority of these are scripts or symbolic links to scripts.
-3 are compiled programs: sources for findit and strerror are here,
-and the source for q is in a sibling repository.
+3 are compiled programs: sources for all of them are here.
 
 There are no releases of command-line tools.
 You are recommended to clone it instead, and use "git pull" to get updates.
@@ -11,7 +10,8 @@ Most commands are in the bin directory below.
 You could add them to your ~/bin or to /usr/local/bin,
 but it's recommended to put command_line_tools/bin in your PATH
 and only put local variants in ~/bin or /usr/local/bin. (You will have at least
-2 local variants: the compiled versions of findit and strerror).
+3 local variants: the compiled versions of findit, disowntty and strerror).
+(once strerror is in place, please also ln -s strerror strsignal).
 
 Some commands come straight from dot_bashrc (which is a copy of my .bashrc). In
 order of appearance, these are:-

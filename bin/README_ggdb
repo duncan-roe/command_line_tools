@@ -1,0 +1,85 @@
+The ggdb entry became too long for the style of README, so I moved it here.
+
+ggdb drives gdb with arbitrary gdb commands on the command line. Usage is:-
+
+    ggdb [-a prgram_args] [-t controlling terminal] <program> \
+         [gdb command]...
+    ggdb -h
+
+I wrote ggdb to let me quickly get back to where I has been in a gdb session
+after I had trashed it e.g. by doing a "next" when I should have done a "step"
+(into failing code). Doing it "quickly" relies on the shell's having a
+command-line editor so the command may be re-issued without re-typing (e.g. bash
+or ksh but not sh).
+
+ggdb bypasses gdb's normal start-up file and inserts its own defaults, which you
+can see and change during your session if you wish.
+
+It's usually best to run ggdb with the CWD being the one where you ran "make".
+That way, gdb will normally find sources without further prompting; but if
+required you can always put gdb "dir" commands on the command line.
+
+The <prgram_args> argument is passed directly to gdb's "run" command and
+may contain anything 'run' supports, e.g. redirection, wildcarding and so on.
+
+The <controlling terminal> argument is passed to gdb via gdb's --tty option.
+ggdb also gets gdb to issue a "set inferior-tty" command for it.
+"set inferior-tty" enables signals to come from the tty where the debugged
+program is running. Under Linux, you need to use "disowntty" for this feature to
+work - see ../disowntty/README for more information.
+
+The almost trivial example below demonstrates setting a breakpoint and printing
+some variables when the breakpoint is hit. (The only reason for having 'b\ 49'
+instead of '"b 49"' is that 'b\ 49' is shorter).
+
+>>>>>>>>>>>>>>>>>>>>>>> Example starts
+16:12:00$ cd ../findit
+16:12:02$ make
+make: `findit' is up to date.
+16:12:09$ ggdb -a "libc.so.6 printf" findit b\ 56 commands p\ sym p\ obj end c
+spawn gdb -n -q
+(gdb) file findit
+Reading symbols from findit...done.
+(gdb) set print null-stop
+(gdb) set print sevenbit-strings
+(gdb) set print elements 0
+(gdb) set height 0
+(gdb) set print pretty
+(gdb) set unwindonsignal on
+(gdb) b main
+Breakpoint 1 at 0x400a5f: file findit.c, line 48.
+(gdb) run libc.so.6 printf
+Starting program: /home/dunc/command_line_tools/findit/findit libc.so.6 printf
+
+Breakpoint 1, main (argc=3, argv=0x7fffffffd658) at findit.c:48
+48        if (argc < 3)
+(gdb) b 56
+Breakpoint 2 at 0x400ac3: file findit.c, line 56.
+(gdb) commands
+Type commands for breakpoint(s) 2, one per line.
+End with a line saying just "end".
+>p sym
+>p obj
+>end
+(gdb) c
+Continuing.
+
+Breakpoint 2, main (argc=3, argv=0x7fffffffd658) at findit.c:56
+56        for (i = 1; i < argc - 2; i++)
+$1 = 0x7fffffffda83 "printf"
+$2 = 0x7fffffffda79 "libc.so.6"
+(gdb) n
+92        handle = dlopen(obj, RTLD_LAZY);
+(gdb) c
+Continuing.
+Found printf in libc.so.6 at 0x7ffff785f710
+[Inferior 1 (process 23857) exited normally]
+(gdb) q
+16:12:41$
+<<<<<<<<<<<<<<<<<<<<<<< Example ends
+
+gdb's "commands" command specifies commands for the last breakpoint set in the
+absence of a breakpoint number.
+This is not the case for gdb's "condition" command: you always have to specify a
+breakpoint number. In this case you need to be aware that breakpoints on the
+ggdb command line start at 2 (since ggdb always does a "b main").
