@@ -158,7 +158,7 @@ do_the_grep()
     names=""
   fi
   { eval find $f $X $n -depth -type f $names $P |
-      xargs $Z -n 32 -r grep $lb -${i}Hs${w}n "$@" -- "$k"; } |
+      xargs $Z -n 32 -r grep $lb -${i}H${w}n "$@" -- "$k" 2>&1; } |
       sed $U 's?^[.]/??'
 }
 main "$@"
