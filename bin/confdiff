@@ -2,11 +2,11 @@
 fileA=$(mktemp)
 fileB=$(mktemp)
 fileC=$(mktemp)
-{ [ $# -eq 2 ]&&co -p$2 .config||cat .config; }|egrep -v '^($|#)'|sort >$fileB
-{ [ $# -eq 2 ]&&co -p$2 .config||cat .config; }|egrep "is not set"|sort >$fileC
+{ [ $# -eq 2 ]&&co -p$2 .config||cat .config; }|grep -E -v '^($|#)'|sort >$fileB
+{ [ $# -eq 2 ]&&co -p$2 .config||cat .config; }|grep -E "is not set"|sort >$fileC
 cat $fileC >>$fileB
-co -p$1 .config|egrep -v '^($|#)'|sort >$fileA
-co -p$1 .config|egrep "is not set"|sort >$fileC
+co -p$1 .config|grep -E -v '^($|#)'|sort >$fileA
+co -p$1 .config|grep -E "is not set"|sort >$fileC
 cat $fileC >>$fileA
-diff $fileA $fileB|egrep -v "^(---$|[1-9][0-9]*(,[1-9][0-9]*)?[acd])"
+diff $fileA $fileB|grep -E -v "^(---$|[1-9][0-9]*(,[1-9][0-9]*)?[acd])"
 rm $fileA $fileB $fileC

@@ -6,7 +6,7 @@ for r in RCS/*,v RCS/.??*,v;do
     i="$(basename "$(basename "$r")" ,v)"
     if [ -f "$i" ];then
       rlog -L -h "$i"|grep Working
-      rcsdiff $* "$i" 2>&1|egrep -v '============|RCS file: RCS/|retrieving revision'
+      rcsdiff $* "$i" 2>&1|grep -E -v '============|RCS file: RCS/|retrieving revision'
     fi
   fi
 done
