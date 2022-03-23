@@ -64,10 +64,11 @@ alias ..='cd ..'
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
 alias ]='dirs -v'
-alias ]]="]|glb "
+alias ]]="]|glb -- "
 alias GS='git status'
 alias GD='git diff'
 alias GL='git log'
+alias GLP='git log --all --graph --decorate --oneline'
 alias \
   XRB='xrandr --fb 2560x1440 --output DVI-0 --mode 640x480 --panning 2560x1440'
 alias XRS='xrandr --fb 2560x1440 --output DVI-0 --mode 2560x1440 --panning 0x0'

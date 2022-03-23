@@ -136,8 +136,8 @@ Alphabetic list of commands:-
           Symbolic links copy correctly (because of -U tar option).
           Accepts "-v" but no other tar options.
           Arg1: source object; Arg2 dir to contain copied object.
- tstclean: Confirms that all files in the CWD that are known to RCS are up to
-           date.
+ tstclean: Diffs any files in the CWD that are known to RCS and are not up to
+           date. Set env var TSTCLEAN_GREP_OPTIONS to change diff format.
  ufl    @ Like fl but search siblings as well as the CWD.
  uflc   @ Like ufl but case independent.
  ufll   @ Like ufl but follow sibling symbolic links.
