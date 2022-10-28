@@ -2,9 +2,10 @@ The ggdb entry became too long for the style of README, so I moved it here.
 
 ggdb drives gdb with arbitrary gdb commands on the command line. Usage is:-
 
-    ggdb [-a program args] [-f file of gdb commands]... \
+    ggdb [-a program args] [-f|-g file of gdb commands]... \
          [-t controlling terminal] <program> [gdb command]...
     ggdb -h
+-g commands run before program is started; -f after main breakpoints.
 
 I wrote ggdb to let me quickly get back to where I has been in a gdb session
 after I had trashed it e.g. by doing a "next" when I should have done a "step"
@@ -17,14 +18,15 @@ can see and change during your session if you wish.
 
 It's usually best to run ggdb with the CWD being the one where you ran "make".
 That way, gdb will normally find sources without further prompting; but if
-required you can always put gdb "dir" commands in a "-f" file or on the command
+required you can always put gdb "dir" commands in a "-g" file or on the command
 line.
 
 The <prgram_args> argument is passed directly to gdb's "run" command and
 may contain anything 'run' supports, e.g. redirection, wildcarding and so on.
 
 The <file of gdb commands> argument(s) supply gdb commands that will be issued
-after the debugged program breakpoints at main()
+either before the program is run (-g) or
+after the debugged program breakpoints at main() (-f).
 (ggdb always sets this breakpoint).
 They are issued in the order specified,
 and before any gdb commands on the command line.
@@ -88,5 +90,9 @@ Found printf in libc.so.6 at 0x7ffff785f710
 gdb's "commands" command specifies commands for the last breakpoint set in the
 absence of a breakpoint number.
 This is not the case for gdb's "condition" command: you always have to specify a
-breakpoint number. In this case you need to be aware that breakpoints on the
-ggdb command line start at 2 (since ggdb always does a "b main").
+breakpoint number.
+Instead of using "condition" explicitly, you can combine it into the associated
+"breakpoint" command using the syntax
+   breakpoint <location> if <condition>
+Otherwise keep in mind that breakpoints on the ggdb command line start at 2
+(since ggdb always does a "b main").
