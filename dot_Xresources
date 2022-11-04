@@ -6,7 +6,8 @@ XTerm*vt100.color4:     Blue
 XTerm*vt100.color5:  Magenta
 XTerm*vt100.color6:     Cyan
 XTerm*vt100.color7:    White
-XTerm.backarrowKeyIsErase: true
+XTerm*backarrowKeyIsErase: false
+XTerm*backarrowKey:        false
 XTerm*background: black
 XTerm*XtDefaultBackground: black
 XTerm*XtDefaultForeground: white
