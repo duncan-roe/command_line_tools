@@ -1,0 +1,47 @@
+NB()
+{
+  [ $(uname -m) = x86_64 ] && x="64" || x=""
+  nice --adjustment=19 sh -c ". ./$1.SlackBuild 2>&1" | tee hee${x}~
+  unset x
+}
+FI(){ find . -uid $1 -exec chown -v $2: {} \; ; }
+PDD(){ pdd $(dirname $1); }
+RE(){ cp -p $1 $1.real; rm -i $1; unreal $1; }
+RQ()
+{
+  x=$(basename $1 .tar.gz);
+  tar Oxf $x.tar.gz $x/setup.py|grep -A${2:-2} install_requires;
+  unset x;
+}
+alias U='upgradepkg --install-new'
+alias UR='upgradepkg --reinstall'
+alias URN='upgradepkg --reinstall --install-new'
+alias URNT='upgradepkg --reinstall --install-new --terse'
+V(){ ls /var/log/packages/$1*; }
+alias 'EQ=echo $?'
+alias GC='git checkout'
+WC(){ find $1 \( \( -name .git -o -name RCS \) -prune -false \) -o \
+  \( -type f ! \( \
+    -name '*.gz' -o \
+    -name '*.tgz' -o \
+    -name COPYING -o \
+    -name LICENSE -o \
+    -name '*.zip' \
+    \) \)|xargs wc -l; }
+LDD(){ ldd $1|glb -v /lib; }
+R(){ readlink -f $(type -p $1); }
+CW(){ confdiff $1|wc -l; }
+alias GB="git branch"
+up(){ [ $# -eq 0 ] && pd -0 || pd -$1; }
+alias LLT='ls -AFlt --time-style=long-iso|head'
+alias LLCT='ls -AFlct --time-style=long-iso|head'
+alias IP=installpkg
+alias SSH='eval "$(ssh-agent -s)"'
+alias p23='head -n23'
+P(){ head -n$1 $2; }
+XD(){ printf '%d\n' 0x$1; }
+DX(){ printf '0x%x\n' $1; }
+CI(){ ci -d -M -u -m"$@"; }
+RMV(){ find . -name "$1"|xargs -r rm -v; }
+alias SX='set -x'
+alias SY='set +x'
