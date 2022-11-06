@@ -47,14 +47,18 @@ Alphabetic list of commands:-
               called darkstar, this script will set up authorisation for your
               user on darkstar and start an xterm there.
  diffdir : Compares 2 directory trees that are under revision control,
-         : skipping comparisons of revision control metadata files.
-         : Currently implemented for RCS, CVS & git.
+           skipping comparisons of revision control metadata files.
+           Currently implemented for RCS, CVS & git.
  dimstar.sh+ Is analogous to darkstar.sh but now you are logged in to some
-             system (say the router / firewall) without an X display and you
-             want to work in an xterm displaying on your home system dimstar.sh.
-             The script uses rsh but I expect you could change it to use ssh.
+             system (e.g. laptop, VM, router &c.) with a small or no X display
+             and you want to work in an xterm displaying on your home system
+             dimstar. "dimstar" is only a place-holder: you can symlink
+             dimstar.sh to <your_system>.sh and the symlink will target
+             your_system.
              Once you have one xterm, you can start more of them from it:
              root xterms also, as long as ~root symlinks ~/.Xauthority.
+ dxt    @ like xt but sets different background
+          (designed for when using a remote X server)
  findit : verifies whether a shared object can satisfy a particular reference.
           Build and install from ../findit/
  fl     @ Like sfl but search CWD only.
