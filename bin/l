@@ -1,14 +1,13 @@
 #!/bin/sh
 #set -x
+unset f
 j=$(basename $0)
 case $j in
 l)
   n="-name"
-  f="-noleaf"
   ;;
 lc)
   n="-iname"
-  f="-noleaf"
   ;;
 ll)
   f="-follow"
