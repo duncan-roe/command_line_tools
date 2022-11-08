@@ -46,8 +46,9 @@ pdd()
   pd
   pd 1
 }
-[ -r ~/functions ] && . ~/functions
 ppd(){ popd $1 >/dev/null; }
+unalias -a
+[ -r ~/functions ] && . ~/functions
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
@@ -61,7 +62,6 @@ export SHELL=`type -p bash`
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
 export Q_HELP_CMD=k
-unalias -a
 alias ..='cd ..'
 [ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
