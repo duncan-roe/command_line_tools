@@ -26,7 +26,8 @@ try_gnu_args()
 {
   grep --version >/dev/null 2>&1 &&
   {
-    n=-noleaf
+    # bsd grep is so old there's no noleaf
+    n=
     lb='--line-buffered -E'
     INAME=-iname
     U=-u
