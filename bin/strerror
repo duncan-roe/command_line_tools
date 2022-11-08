@@ -1,3 +1,0 @@
-#!/bin/sh
-echo "Please compile and install strerror from sibling source directory" >&2
-exit 1

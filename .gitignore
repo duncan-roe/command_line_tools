@@ -1,2 +1,4 @@
 .qrc
-disowntty
+bin/disowntty
+bin/findit
+bin/strerror
