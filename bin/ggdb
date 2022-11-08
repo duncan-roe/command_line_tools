@@ -1,5 +1,6 @@
-#!/bin/bash -p
+#!/bin/sh
 # Hide shell commands from expect \
+[ -n "$BASH" ] || exec bash -p $0 "$@";\
 #set -x;\
 exec expect -- "$0" "$@"
 
