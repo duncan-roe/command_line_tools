@@ -33,8 +33,8 @@ R(){ readlink -f $(type -p $1); }
 CW(){ confdiff $1|wc -l; }
 alias GB="git branch"
 up(){ [ $# -eq 0 ] && pd -0 || pd -$1; }
-alias LLT='ls -AFlt --time-style=long-iso|head'
-alias LLCT='ls -AFlct --time-style=long-iso|head'
+alias LLT='ls -AFlt|head'
+alias LLCT='ls -AFlct|head'
 alias IP=installpkg
 alias SSH='eval "$(ssh-agent -s)"'
 alias p23='head -n23'
