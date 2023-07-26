@@ -9,13 +9,13 @@ append_path ()
   [ -d "$1" ] || return 0
   [ $# -eq 2 ] && PATHNAME=$2 || PATHNAME=PATH
   if [ ! "${!PATHNAME}" = "" ]; then
-    echo :${!PATHNAME}: | grep -q ":${1}:" ||
+    echo ":${!PATHNAME}:" | grep -q ":${1}:" ||
     {
       if $PREPEND
       then
-        [ $PATHNAME = MANPATH -a "${MANPATH:0:1}" = : ] && MANPATH="$1"$MANPATH || eval $PATHNAME="$1":${!PATHNAME}
+        [ $PATHNAME = MANPATH -a "${MANPATH:0:1}" = : ] && MANPATH="$1$MANPATH"|| eval $PATHNAME="$1:${!PATHNAME}"
       else
-        [ $PATHNAME = MANPATH -a "${MANPATH: -1}" = : ] && MANPATH=$MANPATH"$1" || eval $PATHNAME=${!PATHNAME}:"$1"
+        [ $PATHNAME = MANPATH -a "${MANPATH: -1}" = : ] && MANPATH="$MANPATH$1" || eval $PATHNAME="${!PATHNAME}:$1"
       fi
     }
   else
