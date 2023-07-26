@@ -1,6 +1,6 @@
 unset_path_functions () { unset -f unset_path_functions append_path; unset LIB PATHNAME PREPEND; }
 
-export PREPEND=false
+PREPEND=false
 prepend_path () { PREPEND=true; append_path "$@"; PREPEND=false; }
 
 append_path ()
@@ -13,16 +13,20 @@ append_path ()
     {
       if $PREPEND
       then
-        eval $PATHNAME="$1":${!PATHNAME}
+        [ $PATHNAME = MANPATH -a "${MANPATH:0:1}" = : ] && MANPATH="$1"$MANPATH || eval $PATHNAME="$1":${!PATHNAME}
       else
-        eval $PATHNAME=${!PATHNAME}:"$1"
+        [ $PATHNAME = MANPATH -a "${MANPATH: -1}" = : ] && MANPATH=$MANPATH"$1" || eval $PATHNAME=${!PATHNAME}:"$1"
       fi
     }
   else
-    eval $PATHNAME="$1"
+    if [ $PATHNAME = MANPATH ] ; then
+      $PREPEND && MANPATH="$1":: || MANPATH=::"$1"
+    else
+      eval $PATHNAME="$1"
+    fi
   fi
   export $PATHNAME
-
-  # set LIB for those scripts that can use it
 }
+
+# set LIB for those scripts that can use it
 [ "$(uname -m)" = x86_64 ] && LIB=lib64 || LIB=lib
