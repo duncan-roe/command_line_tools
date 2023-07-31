@@ -13,14 +13,14 @@ append_path ()
     {
       if $PREPEND
       then
-        [ $PATHNAME = MANPATH -a "${MANPATH:0:1}" = : ] && MANPATH="$1$MANPATH"|| eval $PATHNAME="$1:${!PATHNAME}"
+        eval $PATHNAME="$1:${!PATHNAME}"
       else
-        [ $PATHNAME = MANPATH -a "${MANPATH: -1}" = : ] && MANPATH="$MANPATH$1" || eval $PATHNAME="${!PATHNAME}:$1"
+        eval $PATHNAME="${!PATHNAME}:$1"
       fi
     }
   else
     if [ $PATHNAME = MANPATH ] ; then
-      $PREPEND && MANPATH="$1":: || MANPATH=::"$1"
+      $PREPEND && MANPATH="$1": || MANPATH=:"$1"
     else
       eval $PATHNAME="$1"
     fi
