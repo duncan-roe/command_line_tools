@@ -44,6 +44,7 @@ RUNINDENT_OPTIONS="
 -sbi0
 -nsob
 -nut
+-lps
 "
 
 # Get rid of newline characters
