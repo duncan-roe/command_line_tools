@@ -71,6 +71,7 @@ Alphabetic list of commands:-
           you see lines as soon as they are matched.
  k      : Pager. Extension of "less" to turn on line numbers unless input is a
           pipe (as determined by there being no non-option args).
+          "k -N" turns off line numbers again (unlike "less -N")
           .bashrc exports LESS to leave the output from k on the screen.
           LESS also changes the ":" prompt to "More".
  kill0  @ Quick check of whether supplied PID is running:

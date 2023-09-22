@@ -21,7 +21,7 @@ order of appearance, these are:-
       but does not echo the new directory stack;
       pd with no arg works similarly.
       pd <some number> does pushd +<some number>,
-      Likely fails with directories named "1", "2" &c.
+      For directories named "1", "2" &c. use e.g. `pd ./1`
  pdd: (pd down) is like pd but the new directory is inserted below the current
       entry in the stack rather than above. If (like me) you like to keep the
       directory stack in order then you can use pdd to a subdir to do that.
