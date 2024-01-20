@@ -1,2 +1,2 @@
 #!/bin/sh
-export LESS="-X -E -Ps More";ls -Fx "$@"|k -R
+export LESS="-X -Ps More";ls -Fx "$@"|k -R
