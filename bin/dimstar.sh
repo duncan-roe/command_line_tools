@@ -1,7 +1,7 @@
 #!/bin/sh
 # \
 export dimstar=$(basename $0 .sh); \
-export localnet=$(cat /etc/HOSTNAME|cut -d. -f2-); \
+export localnet=local.net; \
 exec expect -f "$0" -- "$@"
 
 log_user 1

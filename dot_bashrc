@@ -17,7 +17,7 @@ FIGNORE=".o:.bu:.lo"
 {
   PS1='\h@\t\w\$ '
   IGNOREEOF=5
-  [ "$TERM" = xterm ] &&
+  [ "$TERM" = xterm -o "$TERM" = screen ] &&
   {
     # Cater for change to parameter / tilde substitution at 4.3
     [ ${BASH_VERSION:0:1} -le 4 -a ${BASH_VERSION:2:1} -le 2 ] &&
