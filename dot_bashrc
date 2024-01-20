@@ -62,6 +62,7 @@ export SHELL=`type -p bash`
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
 export Q_HELP_CMD=k
+export UNAME
 alias ..='cd ..'
 [ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
@@ -87,3 +88,4 @@ shopt -s histverify
 shopt -s histappend
 ulimit -c unlimited
 unset i j
+bind 'set enable-bracketed-paste off'
