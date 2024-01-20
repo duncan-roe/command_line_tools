@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -p
 #set -x
 unset bg
 j=$(basename $0)

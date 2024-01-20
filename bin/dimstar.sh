@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -p
 # \
 export dimstar=$(basename $0 .sh); \
 export localnet=local.net; \
