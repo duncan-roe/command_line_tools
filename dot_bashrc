@@ -108,3 +108,4 @@ echo $HISTFILE | grep -E -q histfiles && [ -r $HISTFILE.dirs ] &&
 }
 ulimit -c unlimited
 unset i j
+bind 'set enable-bracketed-paste off'
