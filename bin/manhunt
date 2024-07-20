@@ -7,7 +7,7 @@ fi
 k=""
 m="$1"
 shift
-for i in $(echo $MANPATH|sed 's/:/ /g');do
+for i in $(manpath 2>/dev/null|sed 's/:/ /g');do
   echo Now trying $i...
   cd $i || continue
   find . -type f -name '*.gz' -print|xargs -n 32 -r -e $k zgrep "$@" -- $m /dev/null
