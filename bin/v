@@ -1,2 +1,2 @@
 #!/bin/sh
-export LESS="-X -E -Ps More";ls --color -T 0 -Fx -w$(stty size|cut -d" " -f2) "$@"|k -R
+export LESS="-X -E -Ps More";ls --color -T 0 -FC -w$(stty size|cut -d" " -f2) "$@"|k -R
