@@ -1,17 +1,22 @@
 #!/bin/sh
+#set -x
+a=
 chkargs()
 {
+  r=0
   while [ $# -gt 0 ]
   do
     j="$1"
+    [ "$1" = -N ] || a="$a $1"
     shift
     case "$j" in
-      --) return 0;;
-      -*) continue;;
-       *) return 0;;
+      --) a="$a $@";return $r;;
+      -N) r=1;;
+      -*) a="$a $@";continue;;
+       *) a="$a $@";return $r;;
     esac
   done
   return 1
 }
 if chkargs "$@";then i=-N;fi
-exec less $i "$@"
+exec less $i $a

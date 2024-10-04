@@ -73,6 +73,7 @@
 --space-after-if
 --space-after-while
 --struct-brace-indentation0
+--leave-preprocessor-space
 "
   RUNINDENT_OPTIONS="$(echo $RUNINDENT_OPTIONS)"
 }
