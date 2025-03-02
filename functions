@@ -30,7 +30,6 @@ WC(){ find $1 \( \( -name .git -o -name RCS \) -prune -false \) -o \
     \) \)|xargs wc -l; }
 LDD(){ ldd $1|glb -v /lib; }
 R(){ readlink -f $(type -p $1); }
-CW(){ confdiff $1|wc -l; }
 alias GB="git branch"
 up(){ [ $# -eq 0 ] && pd -0 || pd -$1; }
 alias LLT='ls -AFlt --time-style=long-iso|head'
@@ -42,9 +41,13 @@ P(){ head -n$1 $2; }
 XD(){ printf '%d\n' 0x$1; }
 DX(){ printf '0x%x\n' $1; }
 CI(){ ci -d -M -u -m"$@"; }
+export -f CI
 RMV(){ find . -name "$1"|xargs -r rm -v; }
 alias SX='set -x'
 alias SY='set +x'
+RLK(){ rlog "$@"|k; }
+export -f RLK
+RDK(){ rcsdiff "$@"|k; }
 Hd()
 {
   [ $# -le 1 ] || { echo "Hd: 1 arg max"; return 1; }

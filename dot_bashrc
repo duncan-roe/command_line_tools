@@ -55,6 +55,7 @@ export VISUAL='xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb -font 7x14 -e q'
 export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
+export D=/dimstar/home/dunc
 export SHELL=/bin/bash
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
@@ -63,6 +64,7 @@ export -n HISTFILE
 [ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
+alias CD='cd $(pwd -P)'
 alias ]='dirs -v'
 alias ]]="]|glb --"
 alias GS='git status'
@@ -105,4 +107,5 @@ echo $HISTFILE | glb -q histfiles && [ -r $HISTFILE.dirs ] &&
 }
 ulimit -c unlimited
 unset i j
+unset XAUTHORITY
 bind 'set enable-bracketed-paste off'
