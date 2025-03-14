@@ -1,6 +1,4 @@
-HISTCONTROL=erasedups
 j="/usr/local/bin /home/dunc/command_line_tools/bin /home/dunc/bin"
-[ $(uname -m) = x86_64 ] && j="$j /home/dunc/bin64"
 for i in $j
 do
   echo :$PATH:|grep -q :$i: || { [ -d $i ] && PATH=$i:$PATH; }
@@ -9,8 +7,9 @@ for i in /usr/local/sbin /usr/sbin /sbin
 do
   echo :$PATH:|grep -q :$i: || { [ -d $i ] && PATH=$PATH:$i; }
 done
-HISTIGNORE=\
-'&:]:pd *:v:pd:popd*:ppd*:pdd *:up:G?:H?:T?:LLT:LLCT:GL*::]] *:up *:tstclean*'
+HISTCONTROL=erasedups
+HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
+HT *:Hd *:exit"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -25,8 +24,6 @@ FIGNORE=".o:.bu:.lo"
       PS1='\[\e]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/"~"}\a\]\t\$ '
   }
 }
-: () { cd "../$1"; }
-/ () { cd "./$1"; }
 pd()
 {
   [ -n "$1" ] &&
@@ -65,9 +62,7 @@ export SHELL=/bin/bash
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
 export Q_HELP_CMD=k
-export UNAME
-  export -n HISTFILE
-alias ..='cd ..'
+export -n HISTFILE
 [ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
@@ -84,8 +79,8 @@ alias GLMP='git log --all --graph --decorate --oneline --no-merges'
 alias GLP='git log --all --graph --decorate --oneline'
 alias CU=cmnew RL=rlog RD=rcsdiff
 alias \
-  XRB='xrandr --fb 2560x1440 --output DVI-0 --mode 640x480 --panning 2560x1440'
-alias XRS='xrandr --fb 2560x1440 --output DVI-0 --mode 2560x1440 --panning 0x0'
+  XRB='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 640x480 --panning 2560x1440'
+alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
 [ -t 0 ] && stty erase ^? kill ^u
@@ -95,6 +90,7 @@ shopt -s no_empty_cmd_completion
 shopt -s histreedit
 shopt -s histverify
 shopt -s histappend
+shopt -s direxpand
 ulimit -c unlimited
 unset i j
 unset XAUTHORITY

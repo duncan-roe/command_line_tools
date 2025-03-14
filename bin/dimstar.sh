@@ -30,7 +30,8 @@ exp_send " add $env(dimstar).$env(localnet):0$i\r"
 expect "xauth> "
 exp_send "exit\r"
 expect {$ }
-exp_send "HISTFILE=~/.bash_history dxt 88x98+0+0 -display $env(dimstar).$env(localnet):0\r"
+exp_send "HISTFILE=~/.bash_history dxt 88x98+0+0 \
+  -display $env(dimstar).$env(localnet):0\r"
 expect {$ }
 puts ""
 exit

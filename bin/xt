@@ -1,20 +1,19 @@
-#!/bin/bash -p
+#!/bin/sh
 #set -x
 unset bg
 j=$(basename $0)
 if [ $j = lxt ];then
   size=88x54
-  font="-font 10x20"
+  font="-misc-fixed-medium-r-normal-*-20-*-*-*-*-*-iso10646-*"
 elif [ $j = dxt ];then
   size=88x98
   [ $UID -eq 0 ] && bg=40/10/40 || bg=00/08/40
-  font="-font 7x14"
+  font="-misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-*"
 else
   size=88x72
-  font="-font 7x14"
+  font="-misc-fixed-medium-r-normal-*-13-*-*-*-*-*-iso10646-*"
 fi
 [ -n "$bg" ] || { [ $UID -eq 0 ] && bg=60/00/00 || bg=00/00/00; }
-font="$font -bg rgb:$bg"
 if [ "$1" = -cd ];then
   shift
   if [ -z "$1" ];then
@@ -24,7 +23,7 @@ if [ "$1" = -cd ];then
       cd "$1"
       shift
     else
-      echo "Not a directory. $2" >&2
+      echo "Not a directory. $1" >&2
       exit 1
     fi
   fi
@@ -39,4 +38,4 @@ else
   fi
   shift
 fi
-SHLVL=0 xterm -rw -ls -sl 2000 -sb -geometry $i $font "$@" &
+SHLVL=0 xterm -bg rgb:$bg -font $font -geometry $i -ls -rw -sb -sl 2000 -u8 "$@" &
