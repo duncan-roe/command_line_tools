@@ -45,3 +45,17 @@ CI(){ ci -d -M -u -m"$@"; }
 RMV(){ find . -name "$1"|xargs -r rm -v; }
 alias SX='set -x'
 alias SY='set +x'
+Hd()
+{
+  [ $# -le 1 ] || { echo "Hd: 1 arg max"; return 1; }
+  [ $# -eq 1 ] && i=$1 || i=-1
+  history -d $i
+  unset i
+}
+HT()
+{
+  [ $# -le 1 ] || { echo "HT: 1 arg max"; return 1; }
+  [ $# -eq 1 ] && i=$1 || i=5
+  history |tail -n$i
+  unset i
+}
