@@ -16,7 +16,7 @@ FIGNORE=".o:.bu:.lo"
 {
   PS1='\h@\t\w\$ '
   IGNOREEOF=5
-  [ "$TERM" = xterm -o "$TERM" = screen ] &&
+  [ "${TERM:0:5}" = xterm ] &&
   {
     # Cater for change to parameter / tilde substitution at 4.3
     [ ${BASH_VERSION:0:1} -le 4 -a ${BASH_VERSION:2:1} -le 2 ] &&
@@ -51,7 +51,7 @@ export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
-[ $UID -eq 0 ] && bg=40/10/40 || bg=00/08/40
+[ $UID -eq 0 ] && bg=32/23/15 || bg=00/00/58
 export VISUAL="xterm -bg rgb:$bg -font 7x14 -geometry 88x98+0+0 -ls -rw -sb -sl 2000 -e q"
 unset bg
 export PAGER=k
@@ -93,5 +93,3 @@ shopt -s histappend
 shopt -s direxpand
 ulimit -c unlimited
 unset i j
-unset XAUTHORITY
-bind 'set enable-bracketed-paste off'
