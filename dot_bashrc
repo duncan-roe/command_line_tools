@@ -94,3 +94,4 @@ shopt -s direxpand
 ulimit -c unlimited
 unset i j
 unset XAUTHORITY
+bind 'set enable-bracketed-paste off'
