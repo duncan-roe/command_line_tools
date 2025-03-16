@@ -93,3 +93,4 @@ shopt -s histappend
 shopt -s direxpand
 ulimit -c unlimited
 unset i j
+unset XAUTHORITY
