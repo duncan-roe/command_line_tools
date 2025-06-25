@@ -38,4 +38,4 @@ else
   fi
   shift
 fi
-SHLVL=0 xterm -bg rgb:$bg -font $font -geometry $i -ls -rw -sb -sl 2000 -u8 "$@" &
+SHLVL=0 xterm -bg rgb:$bg -class UXTerm -fg white -font $font -geometry $i -ls -rw -sb -sl 2000 "$@" &
