@@ -143,6 +143,10 @@ Alphabetic list of commands:-
           Arg1: source object; Arg2 dir to contain copied object.
  tstclean: Diffs any files in the CWD that are known to RCS and are not up to
            date. Set env var TSTCLEAN_GREP_OPTIONS to change diff format.
+ u2b    : Convert Unicode codepoints to bytes.
+          u2b accepts 1 or more codepoints expressed as U+HHHH or plain HHHH
+          and outputs the corresponding UTF-8 bytes in hex.
+          This format is suitable for the foundation Q compose macro ^N^Wc
  ufl    @ Like fl but search siblings as well as the CWD.
  uflc   @ Like ufl but case independent.
  ufll   @ Like ufl but follow sibling symbolic links.
