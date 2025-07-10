@@ -14,6 +14,8 @@ Alphabetic list of commands:-
  aflc   @ Like sflc but matches anywhere rather than only as a token.
  afll   @ Like sfll but matches anywhere rather than only as a token.
  afllc  @ Like sfllc but matches anywhere rather than only as a token.
+ b2u    : Convert a series of numeric bytes to Unicode. One can look these up at
+          https://en.wiktionary.org/wiki/Appendix:Unicode
  bak    @ Like bu but for .bak files.
  bu     : Renames <file> to <file>.bu.
  chkhee : Tries to report only errors in the output from "make". By default

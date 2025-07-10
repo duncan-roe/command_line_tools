@@ -1,0 +1,65 @@
+#!/bin/bash -p
+#set -x
+[ $# -ge 0 ] || { echo "Must give at least 1 numeric byte" >&2 ; exit 1; }
+
+main() \
+{
+  while [ $# -gt 0 ]
+  do
+    getcount $*
+    n=$?
+    checkothers $*
+    case $n in
+    0)
+      printf '0x%x ' $1 ;;
+    1)
+      printf 'U+%04X ' $1 ;;
+    2)
+      printf 'U+%04X ' $(((($1&31)<<6)|($2&63)))
+      shift ;;
+    3)
+      printf 'U+%04X ' $(((($1&15)<<12)|(($2&63)<<6)|($3&63)))
+      shift 2 ;;
+    4)
+      printf 'U+%06X ' $(((($1&7)<<18)|(($2&63)<<12)|(($3&63)<<6)|($4&63)))
+      shift 3 ;;
+    esac
+    shift
+  done
+  echo
+}
+
+getcount() \
+{
+  i=$1
+  (((i&128)==0)) && return 1       # USASCII
+  (((i&64)==0)) && return 0        # 1st byte must start 11
+  (((i&32)==0)) && return 2        # 110xxxyy
+  (((i&16)==0)) && return 3        # 1110wwww
+  (((i&8)==0)) && return 4         # 11110uvv
+  return 0                         # Too many 1 bits
+}
+
+checkothers() \
+{
+  local -
+  set -e
+  if [ $n -gt $# ]
+  then
+    n=0
+    return
+  elif ((n==1))
+  then
+    i=$1;
+    ((($i&128)==0)) || n=0
+    return
+  fi
+  shift
+  for ((i=n-1; i>0; i--))
+  do
+    ((($1&0300)==0200)) || { n=0; return; }
+    shift
+  done
+}
+
+main $*
