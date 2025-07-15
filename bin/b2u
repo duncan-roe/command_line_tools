@@ -31,12 +31,11 @@ main() \
 
 getcount() \
 {
-  i=$1
-  (((i&128)==0)) && return 1       # USASCII
-  (((i&64)==0)) && return 0        # 1st byte must start 11
-  (((i&32)==0)) && return 2        # 110xxxyy
-  (((i&16)==0)) && return 3        # 1110wwww
-  (((i&8)==0)) && return 4         # 11110uvv
+  ((($1&128)==0)) && return 1      # USASCII
+  ((($1&64)==0)) && return 0       # 1st byte must start 11
+  ((($1&32)==0)) && return 2       # 110xxxyy
+  ((($1&16)==0)) && return 3       # 1110wwww
+  ((($1&8)==0)) && return 4        # 11110uvv
   return 0                         # Too many 1 bits
 }
 
@@ -47,11 +46,6 @@ checkothers() \
   if [ $n -gt $# ]
   then
     n=0
-    return
-  elif ((n==1))
-  then
-    i=$1;
-    ((($i&128)==0)) || n=0
     return
   fi
   shift
