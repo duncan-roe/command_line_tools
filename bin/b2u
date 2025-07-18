@@ -8,20 +8,28 @@ main() \
   do
     getcount $*
     n=$?
-    checkothers $*
+    ((n < 0)) || checkothers $*
     case $n in
-    0|1) v=$1 ;;
-    2) v=$(((($1&31)<<6)|($2&63))) ;;
-    3) v=$(((($1&15)<<12)|(($2&63)<<6)|($3&63))) ;;
+    -1|1) v=$1 ;;
+    2) v=$(((($1&31)<<6)|($2&63)))
+      ((v > 0x7f)) || overlong ;;
+    3) v=$(((($1&15)<<12)|(($2&63)<<6)|($3&63)))
+      (((v<0xD800) || (v > 0xDFFF))) || reperr "is a UTF-16 surrogate"
+      ((v > 0x7ff)) || overlong ;;
     4) v=$(((($1&7)<<18)|(($2&63)<<12)|(($3&63)<<6)|($4&63)))
+      ((v < 0x110000)) || reperr 'is beyond last defined code point'
+      ((v > 0xfffff)) || overlong ;;
     esac
-    if ((n==0)); then
-      printf '0x%x ' $1
-      n=1
+    if ((n < 0)); then
+      for ((; n < 0; n++))
+      do
+        printf '0x%x ' $1
+        shift
+      done
     else
       printf 'U+%04X ' $v
+      shift $n
     fi
-    shift $n
   done
   echo
 }
@@ -29,11 +37,11 @@ main() \
 getcount() \
 {
   ((($1&128)==0)) && return 1      # USASCII
-  ((($1&64)==0)) && return 0       # 1st byte must start 11
+  ((($1&64)==0)) && return -1      # 1st byte must start 11
   ((($1&32)==0)) && return 2       # 110xxxyy
   ((($1&16)==0)) && return 3       # 1110wwww
   ((($1&8)==0)) && return 4        # 11110uvv
-  return 0                         # Too many 1 bits
+  return -1                        # Too many 1 bits
 }
 
 checkothers() \
@@ -42,15 +50,26 @@ checkothers() \
   set -e
   if [ $n -gt $# ]
   then
-    n=0
+    n=-1
     return
   fi
   shift
   for ((i=n-1; i>0; i--))
   do
-    ((($1&0300)==0200)) || { n=0; return; }
+    ((($1&0300)==0200)) || { n=-1; return; }
     shift
   done
+}
+
+reperr() \
+{
+  printf '\nU+%04X %s\n' $v "$1"
+  n=-$n
+}
+
+overlong()
+{
+  reperr 'with overlong encoding'
 }
 
 main $*
