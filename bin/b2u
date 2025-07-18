@@ -1,9 +1,24 @@
 #!/bin/bash -p
 #set -x
-[ $# -ge 0 ] || { echo "Must give at least 1 numeric byte" >&2 ; exit 1; }
 
-main() \
+main()
 {
+  # Parse options inline so we can shift them away
+  accept=false
+  brief=false
+  while [ $# -gt 0 ]
+  do
+    case $1 in
+    -a) accept=true; shift ;;
+    -b) brief=true; shift ;;
+    -h) help; exit ;;
+    -r) accept=false; shift ;;
+    -v) brief=false; shift ;;
+    *) break
+    esac
+  done
+  [ $# -ge 0 ] || { echo "Must give at least 1 numeric byte" >&2 ; exit 1; }
+
   while [ $# -gt 0 ]
   do
     getcount $*
@@ -34,7 +49,7 @@ main() \
   echo
 }
 
-getcount() \
+getcount()
 {
   ((($1&128)==0)) && return 1      # USASCII
   ((($1&64)==0)) && return -1      # 1st byte must start 11
@@ -44,7 +59,7 @@ getcount() \
   return -1                        # Too many 1 bits
 }
 
-checkothers() \
+checkothers()
 {
   local -
   set -e
@@ -61,15 +76,30 @@ checkothers() \
   done
 }
 
-reperr() \
+reperr()
 {
-  printf '\nU+%04X %s\n' $v "$1"
+  $accept && return
+  $brief || printf '\nU+%04X %s\n' $v "$1"
   n=-$n
 }
 
 overlong()
 {
   reperr 'with overlong encoding'
+}
+
+help()
+{
+  echo 'Usage: b2u [options] numeric bytes'
+  echo -e "\nBytes may be specified in decimal, hex (leading \"0x\") or \
+octal (leading 0)"
+  echo -e "\nOptions:-"
+  echo "-a: Accept illegal encodings"
+  echo "-b: Don't print explanatory message for multibyte errors (b=Brief)"
+  echo "-h: Print this help and exit"
+  echo "-r: Reject illegal encodings (default)"
+  echo "-v: Print explanatory message for multibyte errors (v=Verbose) \
+(default)"
 }
 
 main $*
