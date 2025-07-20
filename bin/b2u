@@ -33,7 +33,7 @@ main()
       ((v > 0x7ff)) || overlong ;;
     4) v=$(((($1&7)<<18)|(($2&63)<<12)|(($3&63)<<6)|($4&63)))
       ((v < 0x110000)) || reperr 'is beyond last defined code point'
-      ((v > 0xfffff)) || overlong ;;
+      ((v > 0xffff)) || overlong ;;
     esac
     if ((n < 0)); then
       for ((; n < 0; n++))
