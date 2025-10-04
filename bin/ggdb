@@ -119,7 +119,7 @@ while {$argc > 2 || ($argc == 2 && [string tolower [lindex $argv 0]] == {-p})} \
 }
 
 # Unless -p PID was given earlier,
-#   next arg must be programe name, -h (help) or -- (edit next arg)
+#   next arg must be program name, -h (help) or -- (edit next arg)
 if {$PID==0} \
 {
   if {[string equal -nocase -length 2 [lindex $argv 0] -h]} {help 0}
