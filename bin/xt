@@ -7,7 +7,7 @@ if [ $j = lxt ];then
   font="-misc-fixed-medium-r-normal-*-20-*-*-*-*-*-iso10646-*"
 elif [ $j = dxt ];then
   size=88x98
-  [ $UID -eq 0 ] && bg=30/08/10 || bg=10/00/3a
+  [ $UID -eq 0 ] && bg=24/0f/0f || bg=00/1c/10
   font="-misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-*"
 else
   size=88x72

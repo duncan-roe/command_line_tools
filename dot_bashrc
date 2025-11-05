@@ -51,7 +51,7 @@ export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
-[ $UID -eq 0 ] && bg=30/08/10 || bg=10/00/3a
+[ $UID -eq 0 ] && bg=24/0f/0f || bg=00/1c/10
 export VISUAL="xterm -bg rgb:$bg -geometry 88x98+0+0 -ls -font\
   -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-* -rw -sb -sl 2000 -e q"
 unset bg
