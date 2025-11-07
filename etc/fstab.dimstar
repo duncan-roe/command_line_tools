@@ -5,12 +5,12 @@
 # device; this may be used with UUID= as a more robust way to name devices
 # that works even if disks are added and removed. See fstab(5).
 #
-# systemd generates mount units based on this file, see systemd.mount(5).
-# Please run 'systemctl daemon-reload' after making changes here.
-#
 # <file system>       <mount point>    <type>      <options>        <dump pass>
-/dev/vda1             /                ext4        errors=remount-ro 0  1
-/dev/sr0              /media/cdrom0    udf,iso9660 user,ro,noauto   0   0
+# / was on /dev/vda5 during installation
+# /boot/efi was on /dev/vda1 during installation
+/dev/vda5             /                ext4        errors=remount-ro 0  1
+/dev/vda1             /boot/efi        vfat        umask=0077       0   1
+/swapfile             none             swap        sw               0   0
 dimstar               /dimstar         virtiofs    defaults         0   0
 dim64                 /dim64           virtiofs    defaults         0   0
 BigDisc2              /BigDisc2        virtiofs    defaults         0   0
