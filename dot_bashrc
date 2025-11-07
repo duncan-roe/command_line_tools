@@ -59,6 +59,10 @@ export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
 export D=/dimstar/home/dunc
+export G=' /dimstar/home/dunc/gdblines'
+export K=' /dimstar/home/dunc/lesslines'
+export L=' /dimstar/home/dunc/lines'
+export Q=' /dimstar/home/dunc/qlines'
 export SHELL=/bin/bash
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
@@ -111,4 +115,4 @@ echo $HISTFILE | glb -q histfiles && [ -r $HISTFILE.dirs ] &&
 ulimit -c unlimited
 unset i j
 unset XAUTHORITY
-bind 'set enable-bracketed-paste off'
+bind C-t:forward-search-history
