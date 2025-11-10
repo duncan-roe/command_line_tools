@@ -12,6 +12,6 @@
 /dev/vda1             /boot/efi        vfat        umask=0077       0   1
 /swapfile             none             swap        sw               0   0
 dimstar               /dimstar         virtiofs    defaults         0   0
-dim64                 /dim64           virtiofs    defaults         0   0
 BigDisc2              /BigDisc2        virtiofs    defaults         0   0
 /BigDisc2/usr64       /dim64/usr       none        bind             0   0
+dim64                 /dim64           virtiofs    defaults         0   0
