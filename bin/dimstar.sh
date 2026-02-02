@@ -7,7 +7,7 @@ exec expect -f "$0" -- "$@"
 
 log_user 1
 #exp_internal 1
-spawn ssh $env(dimstar)
+spawn ssh $env(dimstar).$env(localnet)
 expect {$ }
 exp_send "xauth\r"
 expect "xauth> "
