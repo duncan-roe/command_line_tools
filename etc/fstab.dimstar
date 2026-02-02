@@ -1,3 +1,4 @@
+# Short lines: t23 40 52 69 73
 # /etc/fstab: static file system information.
 #
 # Use 'blkid' to print the universally unique identifier for a
@@ -7,10 +8,10 @@
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
 # / was on /dev/vda5 during installation
 # /boot/efi was on /dev/vda1 during installation
-UUID=5ad89964-15a9-49bf-8bb2-6c42e5f28a51 / ext4    errors=remount-ro 0      1
-UUID=C1DB-6E91                /boot/efi     vfat    umask=0077       0       1
-/swapfile                     none          swap    sw               0       0
-dimstar                       /dimstar      virtiofs defaults        0       0
-BigDisc2                      /BigDisc2     virtiofs defaults        0       0
-/BigDisc2/usr64               /dim64/usr    none     bind            0       0
-dim64                         /dim64        virtiofs defaults        0       0
+/dev/vda5             /                ext4        errors=remount-ro 0  1
+/dev/vda1             /boot/efi        vfat        umask=0077       0   1
+/swapfile             none             swap        sw               0   0
+dimstar               /dimstar         virtiofs    defaults         0   0
+BigDisc2              /BigDisc2        virtiofs    defaults         0   0
+/BigDisc2/usr64       /dim64/usr       none        bind             0   0
+dim64                 /dim64           virtiofs    defaults         0   0
