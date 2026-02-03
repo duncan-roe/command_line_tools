@@ -1,0 +1,105 @@
+#!/bin/bash -p
+#set -x
+
+main()
+{
+  # Parse options inline so we can shift them away
+  accept=false
+  brief=false
+  while [ $# -gt 0 ]
+  do
+    case $1 in
+    -a) accept=true; shift ;;
+    -b) brief=true; shift ;;
+    -h) help; exit ;;
+    -r) accept=false; shift ;;
+    -v) brief=false; shift ;;
+    *) break
+    esac
+  done
+  [ $# -ge 0 ] || { echo "Must give at least 1 numeric byte" >&2 ; exit 1; }
+
+  while [ $# -gt 0 ]
+  do
+    getcount $*
+    n=$?
+    ((n < 0)) || checkothers $*
+    case $n in
+    -1|1) v=$1 ;;
+    2) v=$(((($1&31)<<6)|($2&63)))
+      ((v > 0x7f)) || overlong ;;
+    3) v=$(((($1&15)<<12)|(($2&63)<<6)|($3&63)))
+      (((v<0xD800) || (v > 0xDFFF))) || reperr "is a UTF-16 surrogate"
+      ((v > 0x7ff)) || overlong ;;
+    4) v=$(((($1&7)<<18)|(($2&63)<<12)|(($3&63)<<6)|($4&63)))
+      ((v < 0x110000)) || reperr 'is beyond last defined code point'
+      ((v > 0xffff)) || overlong ;;
+    esac
+    if ((n < 0)); then
+      for ((; n < 0; n++))
+      do
+        printf '0x%x ' $1
+        shift
+      done
+    else
+      printf 'U+%04X ' $v
+      shift $n
+    fi
+  done
+  echo
+}
+
+getcount()
+{
+  ((($1&128)==0)) && return 1      # USASCII
+  ((($1&64)==0)) && return -1      # 1st byte must start 11
+  ((($1&32)==0)) && return 2       # 110xxxyy
+  ((($1&16)==0)) && return 3       # 1110wwww
+  ((($1&8)==0)) && return 4        # 11110uvv
+  return -1                        # Too many 1 bits
+}
+
+checkothers()
+{
+  local -
+  set -e
+  if [ $n -gt $# ]
+  then
+    n=-1
+    return
+  fi
+  shift
+  for ((i=n-1; i>0; i--))
+  do
+    ((($1&0300)==0200)) || { n=-1; return; }
+    shift
+  done
+}
+
+reperr()
+{
+  $accept && return
+  $brief || printf '\nU+%04X %s\n' $v "$1"
+  n=-$n
+}
+
+overlong()
+{
+  reperr 'with overlong encoding'
+}
+
+help()
+{
+  echo 'Usage: b2u [options] numeric bytes'
+  echo -e "\nBytes may be specified in decimal, hex (leading \"0x\") or \
+octal (leading 0)"
+  echo -e "\nOptions:-"
+  echo "-a: Accept illegal encodings"
+  echo "-b: Don't print explanatory message for multibyte errors (b=Brief)"
+  echo "-h: Print this help and exit"
+  echo "-r: Reject illegal encodings (default)"
+  echo "-v: Print explanatory message for multibyte errors (v=Verbose) \
+(default)"
+}
+
+main $*

@@ -1,6 +1,7 @@
 #!/bin/sh
 if [ -n "$SHLVL" ];then
-  if [ $(uname) = Linux ];then
+  i=$(uname)
+  if [ $i = Linux -o ${i::6} = CYGWIN ];then
     i=$(expr $SHLVL - 1)
   else
     i=$SHLVL
