@@ -1,0 +1,1 @@
+echo $HISTFILE | glb -q histfiles && dirs -v > $HISTFILE.dirs

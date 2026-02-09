@@ -13,10 +13,8 @@ and only put local variants in ~/bin or /usr/local/bin. (You will have at least
 3 local variants: the compiled versions of findit, disowntty and strerror).
 (once strerror is in place, please also ln -s strerror strsignal).
 
-Some commands come straight from dot_bashrc (which is a copy of my .bashrc). In
-order of appearance, these are:-
- :  : cd to a sibling directory. Tab completion not available :(
- /  : cd to an immediate subdirectory (much as cd would do)
+Some commands come straight from dot_bashrc (derived from my .bashrc).
+In order of appearance, these are:-
  pd : is an extended pushd. pd <some dir> does a pushd to that dir,
       but does not echo the new directory stack;
       pd with no arg works similarly.
@@ -41,3 +39,8 @@ order of appearance, these are:-
  XRS: Reverts to full screen from XRB
  pc1: ping -c1
   c : 1-letter alias for cat
+exit_sh : alias to save directory stack and exit.
+          Needs you to be using the per-sesion history system
+          documented at
+       https://mlug-au.org/lib/exe/fetch.php?media=20250224-bash_histories.pdf
+          (Briefly, history files are in ~/histfiles).

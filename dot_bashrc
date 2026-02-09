@@ -9,7 +9,7 @@ do
 done
 HISTCONTROL=erasedups
 HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
-HT *:Hd *:exit"
+HT *:Hd *:exit:exit_sh"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -79,12 +79,29 @@ alias \
 alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
+alias exit_sh=". -p$PATH sv"'&&exit'
+# -p$PATH in above line is to defeat `shopt -u sourcepath` below
 [ -t 0 ] && stty erase ^? kill ^u
 shopt -u sourcepath
 shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
 shopt -s histreedit
 shopt -s histverify
-shopt -s histappend
+case $HISTFILE in
+  ~/histfiles/*)
+    shopt -u histappend;;
+  *)
+    shopt -s histappend;;
+esac
+enable cut
+echo $HISTFILE | glb -q histfiles && [ -r $HISTFILE.dirs ] &&
+  [ $(dirs -v | wc -l) -eq 1 ] &&
+{
+  for i in $(tac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
+    i=$(eval echo $i)   # tilde expansion
+    [ -d $i ] && pd $i
+  done
+  ppd -0
+}
 ulimit -c unlimited
 unset i j
