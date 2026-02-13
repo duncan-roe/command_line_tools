@@ -9,7 +9,7 @@ do
 done
 HISTCONTROL=erasedups
 HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
-HT *:Hd *:exit:exit_sh"
+HT *:Hd *:exit:exit_sh:svdirs"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -42,6 +42,10 @@ pdd()
   pd "$1"
   pd
   pd 1
+}
+svdirs()
+{
+  echo $HISTFILE | glb -q histfiles && dirs -v > $HISTFILE.dirs
 }
 ppd(){ popd $1 >/dev/null; }
 unalias -a
@@ -79,8 +83,7 @@ alias \
 alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
-alias exit_sh=". -p$PATH sv"'&&exit'
-# -p$PATH in above line is to defeat `shopt -u sourcepath` below
+alias exit_sh='svdirs&&exit'
 [ -t 0 ] && stty erase ^? kill ^u
 shopt -u sourcepath
 shopt -s checkwinsize
