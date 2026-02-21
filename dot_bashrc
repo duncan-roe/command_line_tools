@@ -45,7 +45,7 @@ pdd()
 }
 svdirs()
 {
-  echo $HISTFILE | glb -q histfiles && dirs -v > $HISTFILE.dirs
+  echo $HISTFILE | grep -E -q histfiles && dirs -v > $HISTFILE.dirs
 }
 ppd(){ popd $1 >/dev/null; }
 unalias -a
@@ -68,7 +68,7 @@ export -n HISTFILE
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
 alias ]='dirs -v'
-alias ]]="]|glb --"
+alias ]]="]|grep -E --"
 alias GS='git status'
 alias GD='git diff'
 alias GL='git log --abbrev-commit'
@@ -97,7 +97,7 @@ case $HISTFILE in
     shopt -s histappend;;
 esac
 enable cut
-echo $HISTFILE | glb -q histfiles && [ -r $HISTFILE.dirs ] &&
+echo $HISTFILE | grep -E -q histfiles && [ -r $HISTFILE.dirs ] &&
   [ $(dirs -v | wc -l) -eq 1 ] &&
 {
   for i in $(tac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
