@@ -14,6 +14,8 @@ Alphabetic list of commands:-
  aflc   @ Like sflc but matches anywhere rather than only as a token.
  afll   @ Like sfll but matches anywhere rather than only as a token.
  afllc  @ Like sfllc but matches anywhere rather than only as a token.
+ b2u    : Convert a series of numeric bytes to Unicode. One can look these up at
+          https://en.wiktionary.org/wiki/Appendix:Unicode
  bak    @ Like bu but for .bak files.
  bu     : Renames <file> to <file>.bu.
  chkhee : Tries to report only errors in the output from "make". By default
@@ -134,6 +136,7 @@ Alphabetic list of commands:-
  strerror: Interprets its numeric arg as error text (c.f. perror(3)).
            Build and install from ../strerror/
  strsignal@ Like strerror but interpret numeric arg as signal description.
+ tilde    @ Like bu but for ~ files (we can't have a command called ~)
  trecpy : Back-to-back-tar copy. Because it's tar it will copy tree names,
           so you need to cd to the parent of the source first.
           trecpy preserves all attributes and source access time (so it can
@@ -143,6 +146,10 @@ Alphabetic list of commands:-
           Arg1: source object; Arg2 dir to contain copied object.
  tstclean: Diffs any files in the CWD that are known to RCS and are not up to
            date. Set env var TSTCLEAN_GREP_OPTIONS to change diff format.
+ u2b    : Convert Unicode codepoints to bytes.
+          u2b accepts 1 or more codepoints expressed as U+HHHH or plain HHHH
+          and outputs the corresponding UTF-8 bytes in hex.
+          This format is suitable for the foundation Q compose macro ^N^Wc
  ufl    @ Like fl but search siblings as well as the CWD.
  uflc   @ Like ufl but case independent.
  ufll   @ Like ufl but follow sibling symbolic links.
