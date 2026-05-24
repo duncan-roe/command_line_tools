@@ -45,8 +45,10 @@ pdd()
 }
 svdirs()
 {
-  echo $HISTFILE | grep -E -q histfiles && dirs -v > $HISTFILE.dirs
+  [ -w $HISTFILE.dirs ] || echo $HISTFILE | glb -q histfiles &&
+    dirs -v > $HISTFILE.dirs
 }
+trap -- 'svdirs' EXIT
 ppd(){ popd $1 >/dev/null; }
 unalias -a
 [ -r ~/functions ] && . ~/functions
@@ -96,9 +98,8 @@ case $HISTFILE in
   *)
     shopt -s histappend;;
 esac
-enable cut 2>/dev/null
-echo $HISTFILE | grep -E -q histfiles && [ -r $HISTFILE.dirs ] &&
-  [ $(dirs -v | wc -l) -eq 1 ] &&
+enable cut rev 2>/dev/null
+[ -r $HISTFILE.dirs ] && [ $(dirs -v | wc -l) -eq 1 ] &&
 {
   for i in $(tac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
     i=$(eval echo $i)   # tilde expansion
