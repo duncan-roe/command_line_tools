@@ -57,7 +57,8 @@ export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
-export VISUAL='xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb -font 7x14 -e q'
+export VISUAL="xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb\
+  -font -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-* -e q"
 export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
@@ -109,3 +110,5 @@ enable cut rev 2>/dev/null
 }
 ulimit -c unlimited
 unset i j
+# forward-search-history was ^S, but that clashes with xonoff
+bind C-t:forward-search-history
