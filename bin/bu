@@ -1,8 +1,10 @@
 #!/bin/sh
+#set -x
 j=$(basename $0)
 if [ -z "$1" ];then
   echo "$j: Missing filename arg"
   exit 1
 fi
 [ "$(echo $j|cut -c 1)" = "_" ] || j=.$j
+[ $j = .tilde ]  && j=\~
 mv -iv "$1" "$1$j"

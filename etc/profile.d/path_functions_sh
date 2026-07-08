@@ -1,4 +1,4 @@
-unset_path_functions () { unset -f unset_path_functions append_path; unset LIB PATHNAME PREPEND; }
+unset_path_functions () { unset -f unset_path_functions append_path prepend_path; unset LIB PATHNAME PREPEND; }
 
 PREPEND=false
 prepend_path () { PREPEND=true; append_path "$@"; PREPEND=false; }

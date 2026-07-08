@@ -1,6 +1,4 @@
-HISTCONTROL=erasedups
 j="/usr/local/bin /home/dunc/command_line_tools/bin /home/dunc/bin"
-[ $(uname -m) = x86_64 ] && j="$j /home/dunc/bin64"
 for i in $j
 do
   echo :$PATH:|grep -q :$i: || { [ -d $i ] && PATH=$i:$PATH; }
@@ -9,8 +7,9 @@ for i in /usr/local/sbin /usr/sbin /sbin
 do
   echo :$PATH:|grep -q :$i: || { [ -d $i ] && PATH=$PATH:$i; }
 done
-HISTIGNORE=\
-'&:]:pd *:v:pd:popd*:ppd*:pdd *:up:G?:H?:T?:LLT:LLCT:GL*::]] *:up *:tstclean*'
+HISTCONTROL=erasedups
+HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
+HT *:Hd *:exit:exit_sh:svdirs"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -25,8 +24,6 @@ FIGNORE=".o:.bu:.lo"
       PS1='\[\e]0;${LOGNAME}@${HOSTNAME}:${PWD/#$HOME/"~"}\a\]\t\$ '
   }
 }
-: () { cd "../$1"; }
-/ () { cd "./$1"; }
 pd()
 {
   [ -n "$1" ] &&
@@ -46,6 +43,12 @@ pdd()
   pd
   pd 1
 }
+svdirs()
+{
+  [ -w $HISTFILE.dirs ] || echo $HISTFILE | glb -q histfiles &&
+    dirs -v > $HISTFILE.dirs
+}
+trap -- 'svdirs' EXIT
 ppd(){ popd $1 >/dev/null; }
 unalias -a
 [ -r ~/functions ] && . ~/functions
@@ -54,39 +57,61 @@ export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
-export VISUAL='xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb -font 7x14 -bg rgb:08/32/20 -e q'
+export VISUAL="xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb\
+  -font -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-* -e q"
 export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
-export SHELL=`type -p bash`
+export SHELL=/bin/bash
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
 export Q_HELP_CMD=k
-alias ..='cd ..'
+export -n HISTFILE
 [ -n "$SHLVL" ] || SHLVL=1
 [ $SHLVL -gt 1 ] && alias s=exit
 alias rdy='echo $SHLVL'
 alias ]='dirs -v'
-alias ]]="]|glb -- "
+alias ]]="]|grep -E --"
 alias GS='git status'
 alias GD='git diff'
-alias GL='git log'
+alias GL='git log --abbrev-commit'
+alias GLL='git log'
+alias GLM='git log --no-merges'
+alias GLMA='git log --no-merges --abbrev-commit'
+alias GLMP='git log --all --graph --decorate --oneline --no-merges'
 alias GLP='git log --all --graph --decorate --oneline'
 alias CU=cmnew RL=rlog RD=rcsdiff
 alias \
-  XRB='xrandr --fb 2560x1440 --output DVI-0 --mode 640x480 --panning 2560x1440'
-alias XRS='xrandr --fb 2560x1440 --output DVI-0 --mode 2560x1440 --panning 0x0'
+  XRB='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 640x480 --panning 2560x1440'
+alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
+alias exit_sh='svdirs&&exit'
 [ -t 0 ] && stty erase ^? kill ^u
 shopt -u sourcepath
 shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
 shopt -s histreedit
 shopt -s histverify
-shopt -s histappend
+case $HISTFILE in
+  ~/histfiles/*)
+    shopt -u histappend;;
+  *)
+    shopt -s histappend;;
+esac
+enable cut rev 2>/dev/null
+[ -r $HISTFILE.dirs ] && [ $(dirs -v | wc -l) -eq 1 ] &&
+{
+  for i in $(tac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
+    i=$(eval echo $i)   # tilde expansion
+    [ -d $i ] && pd $i
+  done
+  ppd -0
+}
 ulimit -c unlimited
 unset i j
 # BSD extras
 export UID
 # N.B. unset UID after su (to ksh)
+# forward-search-history was ^S, but that clashes with xonoff
+bind C-t:forward-search-history

@@ -1,7 +1,7 @@
 .PHONY: clean
 SRCS = $(wildcard *.c)
 TARGET := $(shell basename $$(pwd))
-CFLAGS = -g3 -ggdb -Wall -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS = -g3 -gdwarf-4 -Og -Wall -Wstrict-prototypes -Wmissing-prototypes
 LIBS = 
 
 $(TARGET) : $(SRCS)
