@@ -9,7 +9,7 @@ do
 done
 HISTCONTROL=erasedups
 HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
-HT *:Hd *:exit:exit_sh:svdirs"
+HT *:Hd *:exit:svdirs"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -86,7 +86,6 @@ alias \
 alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
-alias exit_sh='svdirs&&exit'
 [ -t 0 ] && stty erase ^? kill ^u
 shopt -u sourcepath
 shopt -s checkwinsize
@@ -112,6 +111,6 @@ ulimit -c unlimited
 unset i j
 # BSD extras
 export UID
-# N.B. unset UID after su (to ksh)
+# N.B. unset UID after su (to ksh) before doing exec bash
 # forward-search-history was ^S, but that clashes with xonoff
 bind C-t:forward-search-history
