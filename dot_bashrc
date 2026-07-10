@@ -9,7 +9,7 @@ do
 done
 HISTCONTROL=erasedups
 HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
-HT *:Hd *:exit:exit_sh:svdirs"
+HT *:Hd *:exit:svdirs"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -57,8 +57,10 @@ export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
-export VISUAL="xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb\
+[ $UID -eq 0 ] && bg=60/00/00 || bg=00/00/00
+export VISUAL="xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb -bg rgb:$bg\
   -font -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-* -e q"
+unset bg
 export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
@@ -86,7 +88,6 @@ alias \
 alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
-alias exit_sh='svdirs&&exit'
 [ -t 0 ] && stty erase ^? kill ^u
 shopt -u sourcepath
 shopt -s checkwinsize
@@ -115,3 +116,4 @@ export UID
 # N.B. unset UID after su (to ksh)
 # forward-search-history was ^S, but that clashes with xonoff
 bind C-t:forward-search-history
+bind 'set enable-bracketed-paste off'
