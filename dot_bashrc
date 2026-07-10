@@ -57,8 +57,10 @@ export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
-export VISUAL="xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb\
+[ $UID -eq 0 ] && bg=60/00/00 || bg=00/00/00
+export VISUAL="xterm -geometry 88x98+0+0 -rw -ls -sl 2000 -sb -bg rgb:$bg\
   -font -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-* -e q"
+unset bg
 export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
@@ -114,3 +116,4 @@ export UID
 # N.B. unset UID after su (to ksh) before doing exec bash
 # forward-search-history was ^S, but that clashes with xonoff
 bind C-t:forward-search-history
+bind 'set enable-bracketed-paste off'
