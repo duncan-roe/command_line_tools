@@ -13,7 +13,7 @@ else
   size=88x72
   font="-misc-fixed-medium-r-normal-*-13-*-*-*-*-*-iso10646-*"
 fi
-[ -n "$bg" ] || { [ $UID -eq 0 ] && bg=60/00/00 || bg=00/00/00; }
+[ -n "$bg" ] || { [ $UID -eq 0 ] && bg=40/08/18 || bg=00/34/30; }
 if [ "$1" = -cd ];then
   shift
   if [ -z "$1" ];then
