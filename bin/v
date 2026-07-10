@@ -1,2 +1,2 @@
 #!/bin/sh
-ls --color -T 0 -FC -w$(stty size|cut -d" " -f2) "$@"|LESS="-X -E -Ps More" k -R
+gls --color -T 0 -FC -w$(stty size|cut -d" " -f2) "$@"|LESS="-X -E -Ps More" k -R
