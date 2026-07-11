@@ -64,7 +64,7 @@ unset bg
 export PAGER=k
 export GIT_PAGER="k -R"
 export C=' *.c *.h Makefile'
-export SHELL=/bin/bash
+export SHELL=$(type -p bash)
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
 export Q_HELP_CMD=k
@@ -103,7 +103,7 @@ esac
 enable cut rev 2>/dev/null
 [ -r $HISTFILE.dirs ] && [ $(dirs -v | wc -l) -eq 1 ] &&
 {
-  for i in $(tac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
+  for i in $(gtac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
     i=$(eval echo $i)   # tilde expansion
     [ -d $i ] && pd $i
   done
