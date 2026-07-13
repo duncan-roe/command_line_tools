@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/usr/local/bin/bash
+#set -x
 if [ -n "$SHLVL" ];then
   i=$(uname)
-  if [ $i = Linux -o ${i::6} = CYGWIN ];then
+  if [ $i = Linux -o ${i::6} = CYGWIN -o $i = OpenBSD ];then
     i=$(expr $SHLVL - 1)
   else
     i=$SHLVL

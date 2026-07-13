@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/local/bin/bash
 #set -x
 unset bg
 j=$(basename $0)
@@ -7,7 +7,7 @@ if [ $j = lxt ];then
   font="-misc-fixed-medium-r-normal-*-20-*-*-*-*-*-iso10646-*"
 elif [ $j = dxt ];then
   size=88x98
-  [ $UID -eq 0 ] && bg=48/00/20 || bg=08/32/20
+  [ $UID -eq 0 ] && bg=40/08/18 || bg=00/34/30
   font="-misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-*"
 else
   size=88x72

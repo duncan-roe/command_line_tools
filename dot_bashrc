@@ -67,6 +67,8 @@ export C=' *.c *.h Makefile'
 export SHELL=$(type -p bash)
 export LESS="-X -j 1 \
   -Ps?n?f%f .?m(file %i of %m) ..?e(END) ?x- Next\: %x..%t?a:More."
+export Q_ETC_DIR=/home/dunc/q/etc
+export Q_HELP_DIR=/home/dunc/q/help
 export Q_HELP_CMD=k
 export -n HISTFILE
 [ -n "$SHLVL" ] || SHLVL=1
