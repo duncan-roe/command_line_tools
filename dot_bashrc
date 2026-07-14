@@ -52,6 +52,9 @@ trap -- 'svdirs' EXIT
 ppd(){ popd $1 >/dev/null; }
 unalias -a
 [ -r ~/functions ] && . ~/functions
+# Local functions, exports &c
+[ -r ~/.functions ] && . ~/.functions
+
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
