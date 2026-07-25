@@ -160,7 +160,7 @@ proc docmds {which} \
 }
 
 # start gdb, and put in some nice settings
-if {[info exists tty]} {spawn gdb -n -q --tty=$tty} {spawn gdb -n -q}
+if {[info exists tty]} {spawn egdb -n -q --tty=$tty} {spawn egdb -n -q}
 expect {(gdb) }
 if {$PID==0} \
 {
