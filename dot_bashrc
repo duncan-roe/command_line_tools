@@ -9,7 +9,7 @@ do
 done
 HISTCONTROL=erasedups
 HISTIGNORE="?:??:pd*:ppd*:LLT:LLCT:GL*::]] *:up *:tstclean*:history*:\
-HT *:Hd *:exit:exit_sh:svdirs"
+HT *:Hd *:exit:svdirs"
 FIGNORE=".o:.bu:.lo"
 [ $UID -ne 0 ] && FIGNORE=${FIGNORE}:.d
 [ -n "$PS1" ] &&
@@ -45,11 +45,16 @@ pdd()
 }
 svdirs()
 {
-  echo $HISTFILE | grep -E -q histfiles && dirs -v > $HISTFILE.dirs
+  [ -w $HISTFILE.dirs ] || echo $HISTFILE | glb -q histfiles &&
+    dirs -v > $HISTFILE.dirs
 }
+trap -- 'svdirs' EXIT
 ppd(){ popd $1 >/dev/null; }
 unalias -a
 [ -r ~/functions ] && . ~/functions
+# Local functions, exports &c
+[ -r ~/.functions ] && . ~/.functions
+
 echo $PATH|grep ":[.]:" >/dev/null && PATH=`echo $PATH|sed 's/:[.]//'`
 export INFOPATH=/usr/info
 export EXINIT='se showmode number ai'
@@ -92,7 +97,6 @@ alias \
 alias XRS='xrandr --fb 2560x1440 --output DisplayPort-2 --mode 2560x1440 --panning 0x0'
 alias pc1='ping -c1'
 alias c=cat
-alias exit_sh='svdirs&&exit'
 [ -t 0 ] && stty erase ^? kill ^u
 shopt -u sourcepath
 shopt -s checkwinsize
@@ -105,9 +109,8 @@ case $HISTFILE in
   *)
     shopt -s histappend;;
 esac
-enable cut 2>/dev/null
-echo $HISTFILE | grep -E -q histfiles && [ -r $HISTFILE.dirs ] &&
-  [ $(dirs -v | wc -l) -eq 1 ] &&
+enable cut rev 2>/dev/null
+[ -r $HISTFILE.dirs ] && [ $(dirs -v | wc -l) -eq 1 ] &&
 {
   for i in $(tac $HISTFILE.dirs | rev | cut -f1 -d' ' | rev); do
     i=$(eval echo $i)   # tilde expansion
@@ -117,5 +120,6 @@ echo $HISTFILE | grep -E -q histfiles && [ -r $HISTFILE.dirs ] &&
 }
 ulimit -c unlimited
 unset i j
-unset XAUTHORITY
+# forward-search-history was ^S, but that clashes with xonoff
 bind C-t:forward-search-history
+bind 'set enable-bracketed-paste off'
