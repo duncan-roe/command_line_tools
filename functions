@@ -39,7 +39,10 @@ alias SSH='eval "$(ssh-agent -s)"'
 alias p23='head -n23'
 P(){ head -n$1 $2; }
 XD(){ printf '%d\n' 0x$1; }
+XO(){ printf '%o\n' 0x$1; }
 DX(){ printf '0x%x\n' $1; }
+DO(){ printf '%o\n' $1; }
+OD(){ printf '%d\n' 0$1; }
 CI(){ ci -d -M -u -m"$@"; }
 export -f CI
 RMV(){ find . -name "$1"|xargs -r rm -v; }

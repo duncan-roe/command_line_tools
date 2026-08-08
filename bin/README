@@ -136,8 +136,6 @@ Alphabetic list of commands:-
  strerror: Interprets its numeric arg as error text (c.f. perror(3)).
            Build and install from ../strerror/
  strsignal@ Like strerror but interpret numeric arg as signal description.
- sv      : (used internally by exit_sh alias (from ../dot_bashrc) to save the
-            directory stack).
  tilde    @ Like bu but for ~ files (we can't have a command called ~)
  trecpy : Back-to-back-tar copy. Because it's tar it will copy tree names,
           so you need to cd to the parent of the source first.
