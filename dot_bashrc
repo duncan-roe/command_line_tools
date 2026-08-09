@@ -120,6 +120,7 @@ enable cut rev 2>/dev/null
 }
 ulimit -c unlimited
 unset i j
+unset XAUTHORITY
 # forward-search-history was ^S, but that clashes with xonoff
 bind C-t:forward-search-history
 bind 'set enable-bracketed-paste off'
