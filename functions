@@ -19,7 +19,7 @@ alias URN='upgradepkg --reinstall --install-new'
 alias URNT='upgradepkg --reinstall --install-new --terse'
 V(){ ls /var/log/packages/$1*; }
 alias 'EQ=echo $?'
-alias GC='git checkout'
+GC(){ git checkout "$@"; }
 WC(){ find $1 \( \( -name .git -o -name RCS \) -prune -false \) -o \
   \( -type f ! \( \
     -name '*.gz' -o \
