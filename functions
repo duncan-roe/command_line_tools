@@ -1,7 +1,7 @@
 NB()
 {
   [ $(uname -m) = x86_64 ] && x="64" || x=""
-  nice --adjustment=19 sh -c ". ./$1.SlackBuild 2>&1" | tee hee${x}~
+  nice --adjustment=19 sh $1.SlackBuild 2>&1 | tee hee${x}~
   unset x
 }
 FI(){ find . -uid $1 -exec chown -v $2: {} \; ; }
