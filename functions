@@ -1,7 +1,7 @@
 NB()
 {
   [ $(uname -m) = x86_64 ] && x="64" || x=""
-  nice --adjustment=19 sh $1.SlackBuild 2>&1 | tee hee${x}~
+  nice --adjustment=19 sh $1/$(basename $1).SlackBuild 2>&1 | tee $1/hee${x}~
   unset x
 }
 FI(){ find . -uid $1 -exec chown -v $2: {} \; ; }
@@ -31,7 +31,6 @@ WC(){ find $1 \( \( -name .git -o -name RCS \) -prune -false \) -o \
 LDD(){ ldd $1|glb -v /lib; }
 R(){ readlink -f $(type -p $1); }
 CW(){ confdiff $1|wc -l; }
-alias GB="git branch"
 up(){ [ $# -eq 0 ] && pd -0 || pd -$1; }
 alias LLT='ls -AFlt --time-style=long-iso|head'
 alias LLCT='ls -AFlct --time-style=long-iso|head'
@@ -48,6 +47,8 @@ CI(){ ci -d -M -u -m"$@"; }
 RMV(){ find . -name "$1"|xargs -r rm -v; }
 alias SX='set -x'
 alias SY='set +x'
+RLK(){ rlog "$@"|k; }
+RDK(){ rcsdiff "$@"|k; }
 Hd()
 {
   [ $# -le 1 ] || { echo "Hd: 1 arg max"; return 1; }
@@ -62,3 +63,26 @@ HT()
   history |tail -n$i
   unset i
 }
+which ()
+{
+  (alias; declare -f) | /usr/bin/which \
+    --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+}
+GB(){ git branch "$@"; }
+GL(){ git log --abbrev-commit "$@"; }
+GS(){ git status "$@"; }
+GD(){ git diff "$@"; }
+GDW(){ git diff --word-diff "$@"; }
+GLL(){ git log "$@"; }
+GLMA(){ git log --no-merges --abbrev-commit "$@"; }
+GLM(){ git log --no-merges "$@"; }
+GLMM(){ git log --no-merges master; }
+GLMP(){ git log --all --graph --decorate --oneline --no-merges "$@"; }
+GLP(){ git log --all --graph --decorate --oneline "$@"; }
+GR(){ git reset HEAD "$@"; }
+GT(){ git tag -n99; }
+RL(){ rlog "$@"; }
+RD(){ rcsdiff "$@"; }
+CU(){ cmnew "$@"; }
+export -f which RDK RLK CI GC GB GL GS GD GLL GLMA GLM GLMM GLMP GLP GR RL RD \
+  CU GDW GT
