@@ -61,7 +61,6 @@ export EXINIT='se showmode number ai'
 export PAGE=A4
 export EDITOR=q
 [ $UID -eq 0 ] && bg=60/00/00 || bg=00/00/00
-  -font -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-* -e q"
 unset bg
 export PAGER=k
 export GIT_PAGER="k -R"
