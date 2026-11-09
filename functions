@@ -89,5 +89,6 @@ export -f which RDK RLK CI GC GB GL GS GD GLL GLMA GLM GLMM GLMP GLP GR RL RD \
 jxt(){
   [ $# -eq 1 ]||{ echo 'jxt histfile arg missing!' >&2; return; }
   HISTFILE=~/histfiles/$1
+  history -c;history -r
   . ~/.bashrc
 }
